@@ -22,8 +22,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Load plugins
-require("lazy").setup("plugins", require("config"))
+-- Load plugins (specs are auto-imported from lua/plugins/ via config.spec)
+require("lazy").setup(require("config"))
 
 -- Set Appearance
 vim.cmd("colorscheme onedark")
