@@ -61,7 +61,7 @@ return {
             vim.opt.termguicolors = true
 
             -- global
-            vim.api.nvim_set_keymap("n", "<C-h>", ":NvimTreeFocus<cr>", {silent = true, noremap = true})
+            vim.keymap.set("n", "<leader>e", ":NvimTreeFocus<cr>", { silent = true, noremap = true })
         end,
         config = function(LazyPlugin, opts)
             require("nvim-tree").setup({

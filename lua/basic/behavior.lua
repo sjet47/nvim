@@ -12,13 +12,13 @@ vim.o.smartcase = true
 vim.o.incsearch = true
 
 -- See multiple spaces as tabstops so <BS> does the right thing
-vim.o.softtabstop = 2
+vim.o.softtabstop = 4
 
 -- Convert tab to space
 vim.o.expandtab = false
 
 -- Width of shift(<< and >>)
-vim.o.shiftwidth = 2
+vim.o.shiftwidth = 4
 
 -- Round indent to a multiple of 'shiftwidth', i.e. 3 => 4
 vim.o.shiftround = true

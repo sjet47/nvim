@@ -2,17 +2,18 @@
 -- *                           Jump                           *
 -- ************************************************************
 
--- Leader key
--- vim.g.mapleader = " "
+-- Leader key (must be set before plugins load)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- Select all
 vim.keymap.set("", "<C-a>", "gg0vG$")
 
--- Go to head of line
-vim.keymap.set("", "<C-h>", "^")
-
--- Go to tail of line
-vim.keymap.set("", "<C-l>", "$")
+-- Window navigation with <C-h/j/k/l>
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 -- Save
 vim.keymap.set("n", "<C-s>", "<cmd>:w<cr>")

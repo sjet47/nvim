@@ -38,7 +38,7 @@ vim.o.list = false
 vim.o.listchars = "space:·,tab:··"
 
 -- Display current edit mode(i.e. INSERT), (disable when using lualine plugin)
-vim.o.showmode = true
+vim.o.showmode = false
 
 -- Always display tabs(opened buffers) at the top line
 vim.o.showtabline = 2
