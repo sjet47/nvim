@@ -8,7 +8,7 @@ return {
         config = function()
             vim.keymap.set("n", "<C-p>", "<CMD>Telescope find_files<CR>")
             vim.keymap.set("n", "<C-f>", ":<CMD>Telescope live_grep<CR>")
-            vim.keymap.set("n", "<sf>", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+            vim.keymap.set("n", "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 
             local telescope = require("telescope")
             telescope.setup({
