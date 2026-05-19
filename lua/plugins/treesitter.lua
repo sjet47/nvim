@@ -4,10 +4,7 @@ return {
         -- Provide some basic functionality such as highlighting based on it
         ---@see https://github.com/nvim-treesitter/nvim-treesitter
         "nvim-treesitter/nvim-treesitter",
-        cmd = function()
-            local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-            ts_update()
-        end,
+        build = ":TSUpdate",
         config = function()
             require("nvim-treesitter.configs").setup({
                 sync_install = false,
@@ -41,21 +38,7 @@ return {
                 indent = {
                     enable = true,
                 },
-                rainbow = {
-                    enable = true,
-                    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-                    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-                    max_file_lines = 10000, -- Do not enable for files with more than n lines, int
-                    colors = {
-                    "#95ca60",
-                    "#ee6985",
-                    "#D6A760",
-                    "#7794f4",
-                    "#b38bf5",
-                    "#7cc7fe",
-                    },
-                    -- termcolors = { } -- table of colour name strings
-                },
+                -- Rainbow brackets are provided by rainbow-delimiters.nvim
                 -- https://github.com/windwp/nvim-ts-autotag
                 autotag = {
                     enable = true,
@@ -138,12 +121,6 @@ return {
         -- Syntax aware text-objects, select, move, swap, and peek support
         ---@see https://github.com/nvim-treesitter/nvim-treesitter-textobjects
         "nvim-treesitter/nvim-treesitter-textobjects",
-        dependencies = { "nvim-treesitter" }
-    },
-    {
-        -- Rainbow parentheses for neovim using tree-sitter
-        ---@see https://github.com/p00f/nvim-ts-rainbow
-        "p00f/nvim-ts-rainbow",
         dependencies = { "nvim-treesitter" }
     },
     {
