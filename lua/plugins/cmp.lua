@@ -1,7 +1,6 @@
 return {
-    -- Completion plugin for nvim-cmp
-    "hrsh7th/cmp-vsnip",
-    "hrsh7th/vim-vsnip",
+    -- LuaSnip completion source for nvim-cmp
+    "saadparwaiz1/cmp_luasnip",
 
     -- Completion sources
     "hrsh7th/cmp-nvim-lsp",
@@ -15,8 +14,8 @@ return {
         ---@see https://github.com/hrsh7th/nvim-cmp
         "hrsh7th/nvim-cmp",
         dependencies = {
-            "hrsh7th/cmp-vsnip",
-            "hrsh7th/vim-vsnip",
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
@@ -25,6 +24,10 @@ return {
         },
         config = function()
             local cmp = require("cmp")
+            -- Translate termcodes for nvim_feedkeys (used by the cmdline mappings)
+            local t = function(str)
+                return vim.api.nvim_replace_termcodes(str, true, true, true)
+            end
             cmp.setup({
                 snippet = {
                   -- REQUIRED - you must specify a snippet engine
@@ -74,7 +77,8 @@ return {
                     }),
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-i>'] = cmp.mapping.complete(),
+                    -- <C-i> sends the same terminal code as <Tab>; use <C-Space>
+                    ['<C-Space>'] = cmp.mapping.complete(),
                     ['<Esc>'] = cmp.mapping(
                         function(fallback)
                             -- abort and feed ESC
