@@ -1,34 +1,24 @@
-local common = require("lsp.common")
-
-local rust_analyzer = {
+---@see https://rust-analyzer.github.io/book/configuration.html
+return {
     name = "rust_analyzer",
-    on_setup = function(server)
-        server.setup({
-            on_attach = function(client, bufnr)
-                -- common.disableFormat(client)
-                require('completion').on_attach(client)
-                common.keyAttach(bufnr)
-            end,
-            settings = {
-                ["rust-analyzer"] = {
-                    imports = {
-                        granularity = {
-                            group = "module",
-                        },
-                        prefix = "self",
+    config = {
+        settings = {
+            ["rust-analyzer"] = {
+                imports = {
+                    granularity = {
+                        group = "module",
                     },
-                    cargo = {
-                        buildScripts = {
-                            enable = true,
-                        },
+                    prefix = "self",
+                },
+                cargo = {
+                    buildScripts = {
+                        enable = true,
                     },
-                    procMacro = {
-                        enable = true
-                    },
-                }
-            }
-        })
-    end
+                },
+                procMacro = {
+                    enable = true,
+                },
+            },
+        },
+    },
 }
-
-return rust_analyzer

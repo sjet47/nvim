@@ -1,23 +1,33 @@
 return {
-    -- Configs for the Nvim LSP client
+    -- Bundled server configs (lsp/*.lua) consumed by the native vim.lsp API
     ---@see https://github.com/neovim/nvim-lspconfig
     "neovim/nvim-lspconfig",
-    config = function(LazyPlugin, opts)
-        -- Setup language servers.
-        local lspconfig = require('lspconfig')
+    -- mason-lspconfig must install servers before they are enabled
+    dependencies = {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "hrsh7th/cmp-nvim-lsp",
+    },
+    config = function()
+        local common = require("lsp.common")
         local lsps = require("lsp")
-        for lang, lsp in pairs(lsps) do
-            if lsp.on_setup ~= nil then
-                -- lsp_config object have custom on_setup method
-                lsp.on_setup(lspconfig[lsp.name])
-            else
-                -- use default params
-                lspconfig[lsp.name].setup({})
+
+        -- Defaults applied to every server (nvim-cmp capabilities)
+        vim.lsp.config("*", {
+            capabilities = common.capabilities,
+        })
+
+        -- Per-server overrides, then enable. Base configs (cmd, filetypes,
+        -- root markers) come from nvim-lspconfig's bundled lsp/*.lua files.
+        for _, lsp in pairs(lsps) do
+            if lsp.config then
+                vim.lsp.config(lsp.name, lsp.config)
             end
+            vim.lsp.enable(lsp.name)
         end
 
-        -- Global mappings.
-        -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+        -- Global diagnostic mappings.
+        -- See `:help vim.diagnostic.*` for documentation.
         vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -38,7 +48,7 @@ return {
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+            vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, opts)
             vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
             vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
             vim.keymap.set('n', '<space>wl', function()
@@ -48,34 +58,29 @@ return {
             vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
             vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
             vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-            vim.keymap.set('n', '<space>f', function()
-            vim.lsp.buf.format { async = true }
-            end, opts)
+            -- Formatting is handled by conform.nvim (<leader>f)
         end,
         })
 
         vim.diagnostic.config({
             virtual_text = true,
-            signs = true,
             update_in_insert = false,
             underline = true,
-            show_header = false,
             severity_sort = true,
+            signs = {
+                text = {
+                    [vim.diagnostic.severity.ERROR] = " ",
+                    [vim.diagnostic.severity.WARN] = " ",
+                    [vim.diagnostic.severity.HINT] = " ",
+                    [vim.diagnostic.severity.INFO] = " ",
+                },
+            },
             float = {
-                source = "always",
+                source = true,
                 border = "rounded",
                 style = "minimal",
                 header = "",
-                -- prefix = " ",
-                -- max_width = 100,
-                -- width = 60,
-                -- height = 20,
             },
         })
-        local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        end
     end
 }
