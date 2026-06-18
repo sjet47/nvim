@@ -44,20 +44,24 @@ return {
             -- Buffer local mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
             local opts = { buffer = ev.buf }
-            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+            -- Navigation (VSCode-style); prefer Telescope pickers for multi-result lookups
+            vim.keymap.set('n', 'gd', '<cmd>Telescope lsp_definitions<cr>', opts)
+            vim.keymap.set('n', 'gD', '<cmd>Telescope lsp_type_definitions<cr>', opts)
+            vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<cr>', opts)
+            vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', opts)
+            -- Hover / signature
+            vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
             vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, opts)
+            -- Refactor (VSCode-style)
+            vim.keymap.set('n', 'cd', vim.lsp.buf.rename, opts)
+            vim.keymap.set({ 'n', 'v' }, 'cr', vim.lsp.buf.code_action, opts)
+            -- Workspace
             vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
             vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
             vim.keymap.set('n', '<space>wl', function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             end, opts)
-            vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-            vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-            vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-            vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
             -- Formatting is handled by conform.nvim (<leader>f)
 
             -- Highlight other references of the symbol under the cursor
