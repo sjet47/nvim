@@ -94,6 +94,7 @@ return {
                 },
                 filters = {
                     dotfiles = true,
+                    git_ignored = false,
                 },
                 on_attach = on_attach,
             })
