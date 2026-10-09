@@ -137,6 +137,10 @@ end
 quit_abbrev("q", "CloseTab")
 quit_abbrev("wq", "w | CloseTab")
 
+-- Mapping <C-m> also catches <CR> (Nvim treats it as <C-m>'s simplified form)
+-- unless <CR> has its own mapping, so keep Enter as-is explicitly
+vim.keymap.set("n", "<CR>", "<CR>")
+
 -- Save
 vim.keymap.set("n", "<C-s>", "<cmd>:w<cr>")
 
