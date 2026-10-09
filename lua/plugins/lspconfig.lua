@@ -6,13 +6,13 @@ return {
     dependencies = {
         "mason-org/mason.nvim",
         "mason-org/mason-lspconfig.nvim",
-        "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp",
     },
     config = function()
         local common = require("lsp.common")
         local lsps = require("lsp")
 
-        -- Defaults applied to every server (nvim-cmp capabilities)
+        -- Defaults applied to every server (blink.cmp capabilities)
         vim.lsp.config("*", {
             capabilities = common.capabilities,
         })
