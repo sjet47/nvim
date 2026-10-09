@@ -96,9 +96,12 @@ local function show_in_side_win(dir)
   vim.api.nvim_set_current_win(target)
 end
 
--- <C-\> to the right, <C-S-\> (i.e. <C-|>) to the left
+-- <C-\> to the right, <C-S-\> to the left. With the kitty keyboard protocol
+-- <C-S-\> arrives as <C-S-Bslash> (base key + shift), other terminals may send <C-Bar>
 vim.keymap.set("n", "<C-Bslash>", function() show_in_side_win("l") end, { desc = "Show buffer in right window" })
-vim.keymap.set("n", "<C-Bar>", function() show_in_side_win("h") end, { desc = "Show buffer in left window" })
+for _, lhs in ipairs({ "<C-S-Bslash>", "<C-Bar>" }) do
+  vim.keymap.set("n", lhs, function() show_in_side_win("h") end, { desc = "Show buffer in left window" })
+end
 
 -- Save
 vim.keymap.set("n", "<C-s>", "<cmd>:w<cr>")
