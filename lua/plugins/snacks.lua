@@ -53,6 +53,13 @@ return {
                     ignored = true, -- but show git-ignored files (toggle with I)
                     layout = { layout = { width = 24, min_width = 24 } },
                     win = {
+                        -- <Esc> in the search bar goes back to the tree (keeping
+                        -- the filter) instead of closing the whole explorer
+                        input = {
+                            keys = {
+                                ["<Esc>"] = { "toggle_focus", mode = { "n", "i" } },
+                            },
+                        },
                         list = {
                             keys = {
                                 ["L"] = "edit_vsplit",
