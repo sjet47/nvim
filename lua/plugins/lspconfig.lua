@@ -44,11 +44,11 @@ return {
             -- Buffer local mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
             local opts = { buffer = ev.buf }
-            -- Navigation (VSCode-style); prefer Telescope pickers for multi-result lookups
-            vim.keymap.set('n', 'gd', '<cmd>Telescope lsp_definitions<cr>', opts)
-            vim.keymap.set('n', 'gD', '<cmd>Telescope lsp_type_definitions<cr>', opts)
-            vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<cr>', opts)
-            vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', opts)
+            -- Navigation (VSCode-style); prefer snacks pickers for multi-result lookups
+            vim.keymap.set('n', 'gd', function() Snacks.picker.lsp_definitions() end, opts)
+            vim.keymap.set('n', 'gD', function() Snacks.picker.lsp_type_definitions() end, opts)
+            vim.keymap.set('n', 'gi', function() Snacks.picker.lsp_implementations() end, opts)
+            vim.keymap.set('n', 'gr', function() Snacks.picker.lsp_references() end, opts)
             -- Hover / signature
             vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)

@@ -16,23 +16,30 @@ vim.keymap.set("n", "<C-k>", "<C-w>k")
 -- <C-l> jump to end of line (overrides default window-right nav)
 vim.keymap.set("n", "<C-l>", "$", { desc = "Jump to end of line" })
 
--- <C-h> toggle focus between NvimTree and the previous editor window
+-- Filetypes of the snacks explorer sidebar windows
+local EXPLORER_FILETYPES = {
+  snacks_picker_list = true,
+  snacks_picker_input = true,
+  snacks_layout_box = true,
+}
+
+-- <C-h> toggle focus between the explorer and the previous editor window
 vim.keymap.set("n", "<C-h>", function()
-  if vim.bo.filetype == "NvimTree" then
+  if EXPLORER_FILETYPES[vim.bo.filetype] then
     vim.cmd("wincmd p")
   else
-    local ok, api = pcall(require, "nvim-tree.api")
-    if ok then
-      api.tree.focus()
+    local explorer = Snacks.picker.get({ source = "explorer" })[1]
+    if explorer then
+      explorer:focus()
+    else
+      Snacks.explorer()
     end
   end
-end, { desc = "Toggle focus NvimTree" })
+end, { desc = "Toggle focus explorer" })
 
 -- VSCode-like editor group switching: <C-1> ~ <C-9> jump to Nth editor window
--- (skips side panels like NvimTree; ordered top-left to bottom-right)
-local SIDE_PANEL_FILETYPES = {
-  NvimTree = true,
-}
+-- (skips side panels like the explorer; ordered top-left to bottom-right)
+local SIDE_PANEL_FILETYPES = EXPLORER_FILETYPES
 
 for i = 1, 9 do
   vim.keymap.set("n", "<C-" .. i .. ">", function()

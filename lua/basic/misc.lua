@@ -8,6 +8,6 @@ vim.o.updatetime = 500
 -- Duration in ms of waiting for a mapped sequence to complete
 vim.o.timeoutlen = 200
 
--- Disable netrw at the very start of your init.lua, use nvim-tree instead
+-- Disable netrw at the very start of your init.lua, use the snacks explorer instead
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
