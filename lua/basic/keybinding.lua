@@ -103,6 +103,40 @@ for _, lhs in ipairs({ "<C-S-Bslash>", "<C-Bar>" }) do
   vim.keymap.set("n", lhs, function() show_in_side_win("h") end, { desc = "Show buffer in left window" })
 end
 
+-- VSCode-like :q — in the last file window, close the buffer (tab) and show the
+-- previously used one instead of leaving the explorer fullscreen; quit nvim
+-- once no other buffer is left. Splits and special windows close as usual.
+vim.api.nvim_create_user_command("CloseTab", function(opts)
+  local bang = opts.bang and "!" or ""
+  local function is_file_win(win)
+    return is_editor_win(win) and vim.bo[vim.api.nvim_win_get_buf(win)].buftype == ""
+  end
+  local cur = vim.api.nvim_get_current_win()
+  local file_wins = vim.tbl_filter(is_file_win, vim.api.nvim_tabpage_list_wins(0))
+  if not is_file_win(cur) or #file_wins > 1 then
+    vim.cmd("quit" .. bang)
+    return
+  end
+  local cur_buf = vim.api.nvim_get_current_buf()
+  local others = vim.tbl_filter(function(b)
+    return b ~= cur_buf and vim.bo[b].buflisted
+  end, vim.api.nvim_list_bufs())
+  if #others == 0 then
+    vim.cmd("qall" .. bang)
+  else
+    Snacks.bufdelete({ force = opts.bang })
+  end
+end, { bang = true, desc = "Close current buffer like a VSCode tab" })
+
+-- Only rewrite a bare `q` / `q!` / `wq` typed on the : command line
+local function quit_abbrev(from, to)
+  vim.keymap.set("ca", from, function()
+    return (vim.fn.getcmdtype() == ":" and vim.fn.getcmdline() == from) and to or from
+  end, { expr = true })
+end
+quit_abbrev("q", "CloseTab")
+quit_abbrev("wq", "w | CloseTab")
+
 -- Save
 vim.keymap.set("n", "<C-s>", "<cmd>:w<cr>")
 
