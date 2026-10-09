@@ -29,8 +29,7 @@ return {
         -- Global diagnostic mappings.
         -- See `:help vim.diagnostic.*` for documentation.
         vim.keymap.set('n', '<space>d', vim.diagnostic.open_float)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+        -- [d / ]d are Neovim defaults (vim.diagnostic.jump); see `jump` below
         vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
         -- Use LspAttach autocommand to only map the following keys
@@ -85,6 +84,12 @@ return {
             update_in_insert = false,
             underline = true,
             severity_sort = true,
+            -- Show the diagnostic float after [d / ]d, like the old goto_prev/next
+            jump = {
+                on_jump = function(_, bufnr)
+                    vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+                end,
+            },
             signs = {
                 text = {
                     [vim.diagnostic.severity.ERROR] = " ",
