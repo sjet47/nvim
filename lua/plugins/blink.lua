@@ -39,7 +39,15 @@ return {
         },
         signature = { enabled = true, window = { border = "rounded" } },
         sources = {
-            default = { "lsp", "path", "snippets", "buffer" },
+            default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+            providers = {
+                -- Neovim API / plugin completions in lua files (lazydev.nvim)
+                lazydev = {
+                    name = "LazyDev",
+                    module = "lazydev.integrations.blink",
+                    score_offset = 100,
+                },
+            },
         },
         cmdline = {
             keymap = {
