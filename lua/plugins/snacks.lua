@@ -15,6 +15,21 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    init = function()
+        -- `nvim <dir>` opens the explorer and focuses it on UIEnter;
+        -- move focus back to the editor window right after
+        vim.api.nvim_create_autocmd("UIEnter", {
+            once = true,
+            callback = function()
+                vim.schedule(function()
+                    local explorer = Snacks.picker.get({ source = "explorer" })[1]
+                    if explorer and vim.api.nvim_win_is_valid(explorer.main) then
+                        vim.api.nvim_set_current_win(explorer.main)
+                    end
+                end)
+            end,
+        })
+    end,
     ---@type snacks.Config
     opts = {
         picker = {
