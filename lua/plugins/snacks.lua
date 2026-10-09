@@ -59,7 +59,8 @@ return {
         { "<leader>e", explorer_focus, desc = "Explorer: focus" },
         -- Find (search args are passed after `--`, e.g. `foo -- -g *.lua`)
         { "<C-p>", function() Snacks.picker.files() end, desc = "Find files" },
-        { "<C-f>", function() Snacks.picker.grep() end, desc = "Grep" },
+        { "<C-f>", function() Snacks.picker.lines() end, desc = "Search in buffer" },
+        { "<C-S-m>", function() Snacks.picker.grep() end, desc = "Grep" },
         { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
         { "<leader>fw", function() Snacks.picker.grep_word() end, mode = { "n", "x" }, desc = "Grep word/selection" },
         { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
