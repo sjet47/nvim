@@ -4,8 +4,8 @@ return {
     "neovim/nvim-lspconfig",
     -- mason-lspconfig must install servers before they are enabled
     dependencies = {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason.nvim",
+        "mason-org/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
