@@ -17,7 +17,9 @@ return {
                 analyses = {
                     unusedparams = true,
                 },
-                staticcheck = true,
+                -- staticcheck's nilness dataflow analysis never converges on some
+                -- heybox-go packages, pinning gopls at ~1.4 cores forever
+                staticcheck = false,
                 semanticTokens = true,
                 hints = {
                     assignVariableTypes = true,
