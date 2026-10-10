@@ -93,6 +93,11 @@ return {
 				if vim.bo[bufnr].filetype == "go" and not heybox_formatter(bufnr) then
 					go_organize_imports(bufnr)
 				end
+				-- protols formats with clang-format, which would restyle whole
+				-- files nobody formatted before; keep that manual (<leader>f)
+				if vim.bo[bufnr].filetype == "proto" then
+					return nil
+				end
 				return { timeout_ms = 1000, lsp_format = "fallback" }
 			end,
 		})
