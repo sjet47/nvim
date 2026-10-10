@@ -80,7 +80,8 @@ return {
         -- Explorer
         { "<leader>e", explorer_focus, desc = "Explorer: focus" },
         -- Find (search args are passed after `--`, e.g. `foo -- -g *.lua`)
-        { "<C-p>", function() Snacks.picker.files() end, desc = "Find files" },
+        -- buffers + recent first, then every file in cwd once you start typing
+        { "<C-p>", function() Snacks.picker.smart({ filter = { cwd = true } }) end, desc = "Find files (recent first)" },
         { "<C-f>", function() Snacks.picker.lines() end, desc = "Search in buffer" },
         { "<C-S-m>", function() Snacks.picker.grep() end, desc = "Grep" },
         -- Needs the kitty keyboard protocol; see the <CR> passthrough in basic/keybinding.lua
