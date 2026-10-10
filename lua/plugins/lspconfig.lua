@@ -58,6 +58,13 @@ return {
             vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, opts)
+            -- <Esc> dismisses the hover / signature float without moving the cursor
+            vim.keymap.set('n', '<Esc>', function()
+                local win = vim.b[ev.buf].lsp_floating_preview
+                if win and vim.api.nvim_win_is_valid(win) then
+                    vim.api.nvim_win_close(win, true)
+                end
+            end, opts)
             -- Refactor (VSCode-style)
             vim.keymap.set('n', 'cd', vim.lsp.buf.rename, opts)
             vim.keymap.set({ 'n', 'v' }, 'cr', vim.lsp.buf.code_action, opts)
