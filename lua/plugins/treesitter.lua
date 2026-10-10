@@ -1,5 +1,5 @@
 -- Languages to install parsers for and enable treesitter features on
-local langs = { "c", "cpp", "go", "rust", "python", "lua", "bash", "json" }
+local langs = { "c", "cpp", "go", "rust", "python", "lua", "bash", "json", "proto" }
 
 return {
     {
