@@ -32,6 +32,12 @@ return {
         -- [d / ]d are Neovim defaults (vim.diagnostic.jump); see `jump` below
         vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
+        -- Toggle inlay hints globally. A bare Ctrl+Alt (as in VSCode's
+        -- hold-to-peek) never reaches a terminal app, so it needs a letter.
+        vim.keymap.set({ 'n', 'i' }, '<C-M-t>', function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end, { desc = "Toggle inlay hints" })
+
         -- Use LspAttach autocommand to only map the following keys
         -- after the language server attaches to the current buffer
         vim.api.nvim_create_autocmd('LspAttach', {
