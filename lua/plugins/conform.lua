@@ -12,6 +12,7 @@ return {
 				cpp = { "clang_format" },
 				go = { "gofmt" },
 				json = { "jq" },
+				python = { "ruff_organize_imports", "ruff_format" },
 			},
 			-- Fall back to LSP formatting for filetypes without a formatter above
 			format_on_save = {
