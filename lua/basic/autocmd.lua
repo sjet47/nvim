@@ -45,3 +45,23 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         end
     end,
 })
+
+-- Strip trailing whitespace on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    group = group,
+    callback = function(ev)
+        local bo = vim.bo[ev.buf]
+        -- A trailing space is significant in a patch
+        if bo.binary or not bo.modifiable or bo.filetype == "diff" then
+            return
+        end
+        -- Respect a project that opts out through .editorconfig
+        local editorconfig = vim.b[ev.buf].editorconfig
+        if editorconfig and editorconfig.trim_trailing_whitespace == "false" then
+            return
+        end
+        local view = vim.fn.winsaveview()
+        vim.cmd([[keeppatterns keepjumps %s/\s\+$//e]])
+        vim.fn.winrestview(view)
+    end,
+})
