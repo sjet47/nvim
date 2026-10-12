@@ -77,11 +77,11 @@ return {
         lazygit = { enabled = true },
         -- Skip treesitter, LSP ... for files too big to handle smoothly
         bigfile = { enabled = true },
-        -- Smooth scrolling, at half the default duration (and a quarter
+        -- Smooth scrolling, much shorter than the default 200ms (and 50ms
         -- once a scroll key is held or repeated)
         scroll = {
             enabled = true,
-            animate = { duration = { step = 10, total = 100 } },
+            animate = { duration = { step = 10, total = 50 } },
             animate_repeat = { duration = { step = 5, total = 25 } },
         },
         -- Signs, line numbers, folds and git changes in one column layout
