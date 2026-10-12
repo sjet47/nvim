@@ -54,6 +54,7 @@ return {
                 ["ai"] = "@conditional.outer", ["ii"] = "@conditional.inner",
                 ["al"] = "@loop.outer",        ["il"] = "@loop.inner",
                 ["ab"] = "@block.outer",       ["ib"] = "@block.inner",
+                ["aa"] = "@parameter.outer",   ["ia"] = "@parameter.inner",
             }
             for key, obj in pairs(selects) do
                 vim.keymap.set({ "x", "o" }, key, function()
