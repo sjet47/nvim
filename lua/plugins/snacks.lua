@@ -75,6 +75,12 @@ return {
         input = { enabled = true },
         indent = { enabled = true },
         lazygit = { enabled = true },
+        -- Skip treesitter, LSP ... for files too big to handle smoothly
+        bigfile = { enabled = true },
+        -- Smooth scrolling
+        scroll = { enabled = true },
+        -- Signs, line numbers, folds and git changes in one column layout
+        statuscolumn = { enabled = true },
     },
     keys = {
         -- Explorer
