@@ -49,6 +49,13 @@ return {
             end
         end, { desc = "Dismiss LSP float" })
 
+        -- Nvim's default gr* LSP maps are covered by the buffer-local ones
+        -- below. Left in place they make `gr` wait 'timeoutlen' for a third key
+        for _, lhs in ipairs({ "grn", "gra", "grr", "gri", "grt", "grx" }) do
+            pcall(vim.keymap.del, "n", lhs)
+        end
+        pcall(vim.keymap.del, "x", "gra")
+
         -- Use LspAttach autocommand to only map the following keys
         -- after the language server attaches to the current buffer
         vim.api.nvim_create_autocmd('LspAttach', {
