@@ -4,6 +4,16 @@ return {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
+    keys = {
+        -- Not a bare <leader>f: as a prefix of the <leader>f* find maps it
+        -- only fired when typed fast enough
+        {
+            "<leader>ff",
+            function() require("conform").format({ async = true, lsp_format = "fallback" }) end,
+            mode = { "n", "v" },
+            desc = "Format buffer",
+        },
+    },
     config = function()
         -- Project rule: a buffer inside the `heybox-go` module is formatted the
         -- way `zeus fmt` does it. `zeus fmt` itself rewrites whole packages on
@@ -90,7 +100,7 @@ return {
                 end
                 -- protols formats with clang-format, bashls with shfmt and yamlls
                 -- with prettier, which would restyle whole files nobody formatted
-                -- before; keep that manual (<leader>f)
+                -- before; keep that manual (<leader>ff)
                 local manual = { proto = true, sh = true, bash = true, yaml = true }
                 if manual[vim.bo[bufnr].filetype] then
                     return nil
@@ -98,12 +108,5 @@ return {
                 return { timeout_ms = 1000, lsp_format = "fallback" }
             end,
         })
-
-        vim.keymap.set(
-            { "n", "v" },
-            "<leader>f",
-            function() require("conform").format({ async = true, lsp_format = "fallback" }) end,
-            { desc = "Format buffer" }
-        )
     end,
 }

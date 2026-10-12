@@ -84,7 +84,7 @@ return {
                 vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
                 vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
                 vim.keymap.set("n", "<space>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
-                -- Formatting is handled by conform.nvim (<leader>f)
+                -- Formatting is handled by conform.nvim (<leader>ff)
                 -- Highlighting the word under the cursor is handled by mini.cursorword
             end,
         })
