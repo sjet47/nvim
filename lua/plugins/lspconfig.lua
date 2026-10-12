@@ -72,6 +72,9 @@ return {
             vim.keymap.set('n', 'gD', function() Snacks.picker.lsp_type_definitions() end, opts)
             vim.keymap.set('n', 'gi', function() Snacks.picker.lsp_implementations() end, opts)
             vim.keymap.set('n', 'gr', function() Snacks.picker.lsp_references() end, opts)
+            -- Call hierarchy: c[a]lls [i]ncoming / [o]utgoing
+            vim.keymap.set('n', 'gai', function() Snacks.picker.lsp_incoming_calls() end, opts)
+            vim.keymap.set('n', 'gao', function() Snacks.picker.lsp_outgoing_calls() end, opts)
             -- Hover / signature
             vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
