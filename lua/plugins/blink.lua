@@ -30,7 +30,24 @@ return {
             ["<C-b>"] = { "scroll_documentation_up", "fallback" },
             ["<C-f>"] = { "scroll_documentation_down", "fallback" },
         },
-        snippets = { preset = "luasnip" },
+        snippets = {
+            preset = "luasnip",
+            -- The preset's versions of these two also make <Tab> expand a
+            -- snippet trigger sitting before the cursor while the menu is
+            -- hidden. Snippets should only ever come from the menu, so limit
+            -- <Tab> to jumping between the stops of an expanded one
+            active = function(filter)
+                local ls = require("luasnip")
+                if filter and filter.direction then
+                    return ls.jumpable(filter.direction)
+                end
+                return ls.locally_jumpable(1)
+            end,
+            jump = function(direction)
+                local ls = require("luasnip")
+                return ls.jumpable(direction) and ls.jump(direction)
+            end,
+        },
         completion = {
             -- Moving through the list only highlights; <Tab> inserts
             list = { selection = { preselect = true, auto_insert = false } },
