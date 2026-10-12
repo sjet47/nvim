@@ -146,6 +146,11 @@ end
 quit_abbrev("q", "CloseTab")
 quit_abbrev("wq", "w | CloseTab")
 
+-- ZZ / ZQ natively close the window; route them through CloseTab too.
+-- Like the native ZZ, only write when the buffer was modified
+vim.keymap.set("n", "ZZ", "<cmd>update | CloseTab<cr>", { desc = "Save and close tab" })
+vim.keymap.set("n", "ZQ", "<cmd>CloseTab!<cr>", { desc = "Close tab without saving" })
+
 -- Mapping <C-m> also catches <CR> (Nvim treats it as <C-m>'s simplified form)
 -- unless <CR> has its own mapping, so keep Enter as-is explicitly
 vim.keymap.set("n", "<CR>", "<CR>")
