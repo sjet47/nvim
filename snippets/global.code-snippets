@@ -1,0 +1,73 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+////////////////////////////////////////////////////////////////////////////////
+	"New_Snippet":
+	{
+		"prefix": "ns",
+		"body":
+		[
+			"\"$1\":\n{\n\t\"prefix\": \"$2\",\n\t\"body\":\n\t[\n\t\t\"$3\"\n\t],\n\t\"description\": \"$4\"\n},",
+			"////////////////////////////////////////////////////////////////////////////////",
+			"$0"
+		],
+		"description": "A New Snippet Example"
+	},
+////////////////////////////////////////////////////////////////////////////////
+	"Print Separate Line":
+	{
+		"prefix": "///",
+		"body":
+		[
+			"////////////////////////////////////////////////////////////////////////////////"
+		],
+		"description": "Separate Line"
+	},
+////////////////////////////////////////////////////////////////////////////////
+	"PragmaHeader":
+    {
+        "prefix": "#h",
+        "body":
+        [
+            "#ifndef $1_H",
+            "#define $1_H",
+            "\n\n$0\n\n",
+            "#endif"
+        ],
+        "description": "A C/C++ Pragma Header to prevent the headfile from being included repeatedly"
+	},
+	"Info":
+	{
+		"prefix": "info",
+		"body":
+		[
+			"$BLOCK_COMMENT_START",
+			"* ${1:$TM_FILENAME_BASE}",
+			"* $CURRENT_DAY_NAME_SHORT $CURRENT_MONTH_NAME_SHORT $CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND CST $CURRENT_YEAR ",
+			"* @Version ${2:version}",
+			"* @Auther ${3|ASjet,Aryan Sjet,ITFS777,Sun Linhao|}",
+			"* @Email Aryan.ITFS@iCloud.com",
+			"* @License ${4|Apache License 2.0,MIT License,GNU AGPLv3,GNU GPLv3,GNU LGPLv3,Mozilla Public License 2.0|}",
+			"* @Copyright © $CURRENT_YEAR, ${3:Aryan Sjet}",
+			"$BLOCK_COMMENT_END\n\n"
+		],
+		"description": ""
+	},
+////////////////////////////////////////////////////////////////////////////////
+
+
+}

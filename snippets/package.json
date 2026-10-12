@@ -1,0 +1,15 @@
+{
+  "name": "user-snippets",
+  "description": "Snippets carried over from VSCode (User/snippets), loaded by LuaSnip's from_vscode loader",
+  "contributes": {
+    "snippets": [
+      { "language": "all", "path": "./global.code-snippets" },
+      { "language": "c", "path": "./c.jsonc" },
+      { "language": "cpp", "path": "./cpp.jsonc" },
+      { "language": "html", "path": "./html.jsonc" },
+      { "language": "php", "path": "./php.jsonc" },
+      { "language": "python", "path": "./python.jsonc" },
+      { "language": ["sh", "bash", "zsh"], "path": "./sh.jsonc" }
+    ]
+  }
+}

@@ -1,2 +1,4 @@
 # Compiled from the .add word lists (:mkspell)
 spell/*.spl
+# Snippets that stay on this machine (see lua/plugins/luasnip.lua)
+snippets/local/

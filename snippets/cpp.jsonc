@@ -1,0 +1,189 @@
+{
+    ////////////////////////////////////////////////////////////////////////////
+    // Place your snippets for cpp here. Each snippet is defined under a snippet name and has a prefix, body and
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+    // same ids are connected.
+    // Example:
+    // "Print to console": {
+    // 	"prefix": "log",
+    // 	"body": [
+    // 		"console.log('$1');",
+    // 		"$2"
+    // 	],
+    // 	"description": "Log output to console"
+    // }
+////////////////////////////////////////////////////////////////////////////////
+    "Cpp_Temple": {
+        "prefix": "#c",
+        "body": [
+            "#include <iostream>",
+            "#include <string>",
+            "#include <vector>\n",
+            "////////////////////////////////////////////////////////////////////////////////",
+            "using std::cin;",
+            "using std::cout;",
+            "using std::endl;",
+            "using std::string;",
+            "using std::vector;",
+            "////////////////////////////////////////////////////////////////////////////////",
+            "int main(int argc, char ** argv)\n{\n\t$0\n\treturn 0;\n}"
+        ],
+        "description": "A C++ Temple"
+    },
+    "Cpp_Simple_Temple": {
+        "prefix": "#cs",
+        "body": [
+            "#include <iostream>\n",
+            "////////////////////////////////////////////////////////////////////////////////",
+            "using std::cin;",
+            "using std::cout;",
+            "using std::endl;",
+            "////////////////////////////////////////////////////////////////////////////////",
+            "int main(void)\n{\n\t$0\n\treturn 0;\n}"
+        ],
+        "description": "A C++ Simple Temple"
+    },
+////////////////////////////////////////////////////////////////////////////////
+    "iostream": {
+        "prefix": "ios",
+        "body": [
+            "#include <iostream>"
+        ],
+        "description": "iostream"
+    },
+////////////////////////////////////////////////////////////////////////////////
+    "string": {
+        "prefix": "str",
+        "body": [
+            "#include <string>"
+        ],
+        "description": "include string"
+    },
+////////////////////////////////////////////////////////////////////////////////
+    "vector": {
+        "prefix": "vec",
+        "body": [
+            "#include <vector>"
+        ],
+        "description": "include vector"
+    },
+    "algorithm": {
+        "prefix": "alg",
+        "body": [
+            "#include <algorithm>"
+        ],
+        "description": "include algorithm"
+    },
+////////////////////////////////////////////////////////////////////////////////
+    "std::": {
+        "prefix": "sd",
+        "body": [
+            "std::"
+        ],
+        "description": "std::"
+    },
+    "cstring": {
+        "prefix": "cstr",
+        "body": [
+            "#include <cstring>"
+        ],
+        "description": "include cstring"
+    },
+    "cstdio": {
+        "prefix": "cstd",
+        "body": [
+            "#include <cstdio>"
+        ],
+        "description": "include cstdio"
+    },
+////////////////////////////////////////////////////////////////////////////////
+    "hdoj": {
+        "prefix": "#oj",
+        "body": [
+            "#include <iostream>",
+            "#include <cstdio>",
+            "#include <cstring>",
+            "#include <algorithm>\n",
+            "////////////////////////////////////////////////////////////////////////////////",
+            "using namespace std;\n",
+            "////////////////////////////////////////////////////////////////////////////////",
+            "int main(void)\n{\n\t$0\n\treturn 0;\n}"
+        ],
+        "description": ""
+    },
+////////////////////////////////////////////////////////////////////////////////
+    "for": {
+        "prefix": "f",
+        "body": [
+            "for(${1:int} ${2:i} = ${3:0}; ${2:i} ${4|!=,<,<=,>=,>|} $5; ${6|++,--|}${2:i})\n$0"
+        ],
+        "description": "for temple"
+    },
+////////////////////////////////////////////////////////////////////////////////
+"template method":
+{
+    "prefix": "tm",
+    "body":
+    [
+        "template <typename T>",
+        "${2:retValue} ${1:className}<T>::${3:methodName}(${4:parameter})",
+        "{\n\t$5\n}"
+    ],
+    "description": "template for template method"
+},
+////////////////////////////////////////////////////////////////////////////////
+"template function":
+{
+    "prefix": "tf",
+    "body":
+    [
+        "template <typename T>",
+        "${1:retValue} ${2:funcName}(${3:parameter})$4"
+    ],
+    "description": "template for template function"
+},
+////////////////////////////////////////////////////////////////////////////////
+"template header":
+{
+    "prefix": "tt",
+    "body":
+    [
+        "template <typename T>\n"
+    ],
+    "description": "alias for template <typename T>"
+},
+////////////////////////////////////////////////////////////////////////////////
+"class defination":
+{
+    "prefix": "classd",
+    "body":
+    [
+        "class ${1:ClassName}",
+        "{",
+        "public:",
+        "\t${1:ClassName}() = default;",
+        "\t~${1:ClassName}();",
+        "\t$2",
+        "private:",
+        "\t$3",
+        "};"
+    ],
+    "description": "Class defination template"
+},
+////////////////////////////////////////////////////////////////////////////////
+"class method":
+{
+    "prefix": "classm",
+    "body":
+    [
+        "${2:retValue} ${1:className}::(${3:parameter})",
+        "{",
+        "\t${4}",
+        "}"
+    ],
+    "description": "Class method description template"
+},
+////////////////////////////////////////////////////////////////////////////////
+
+}
