@@ -108,13 +108,22 @@ end
 -- once no other buffer is left. Splits and special windows close as usual.
 vim.api.nvim_create_user_command("CloseTab", function(opts)
   local bang = opts.bang and "!" or ""
+  -- Report failures (e.g. E37 on unsaved changes) the way a native :q does
+  -- instead of a Lua traceback
+  local function quit(cmd)
+    local ok, err = pcall(vim.cmd, cmd .. bang)
+    if not ok then
+      local msg = tostring(err):match("Vim%b():(.*)$") or tostring(err)
+      vim.api.nvim_echo({ { msg } }, true, { err = true })
+    end
+  end
   local function is_file_win(win)
     return is_editor_win(win) and vim.bo[vim.api.nvim_win_get_buf(win)].buftype == ""
   end
   local cur = vim.api.nvim_get_current_win()
   local file_wins = vim.tbl_filter(is_file_win, vim.api.nvim_tabpage_list_wins(0))
   if not is_file_win(cur) or #file_wins > 1 then
-    vim.cmd("quit" .. bang)
+    quit("quit")
     return
   end
   local cur_buf = vim.api.nvim_get_current_buf()
@@ -122,7 +131,7 @@ vim.api.nvim_create_user_command("CloseTab", function(opts)
     return b ~= cur_buf and vim.bo[b].buflisted
   end, vim.api.nvim_list_bufs())
   if #others == 0 then
-    vim.cmd("qall" .. bang)
+    quit("qall")
   else
     Snacks.bufdelete({ force = opts.bang })
   end
