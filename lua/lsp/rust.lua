@@ -11,9 +11,15 @@ return {
                     prefix = "self",
                 },
                 cargo = {
+                    features = "all",
                     buildScripts = {
                         enable = true,
                     },
+                },
+                inlayHints = {
+                    closureReturnTypeHints = { enable = "always" },
+                    discriminantHints = { enable = "always" },
+                    lifetimeElisionHints = { enable = "always" },
                 },
                 procMacro = {
                     enable = true,
