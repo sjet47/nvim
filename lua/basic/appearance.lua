@@ -63,3 +63,15 @@ vim.o.laststatus = 2
 
 -- Default border of floating windows (LSP hover, signature help, ...)
 vim.o.winborder = "rounded"
+
+-- Fold by syntax tree (functions, blocks, ...) wherever a treesitter parser
+-- is available. Everything starts unfolded: za toggles the fold under the
+-- cursor, zM / zR close / open all of them
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+-- Show a closed fold as its first line, syntax highlighting included, without
+-- padding the rest of the line with dots
+vim.o.foldtext = ""
+vim.opt.fillchars:append({ fold = " " })
