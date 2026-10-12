@@ -38,6 +38,17 @@ return {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end, { desc = "Toggle inlay hints" })
 
+        -- <Esc> dismisses the hover / signature float without moving the cursor.
+        -- Global rather than buffer-local: multicursor.nvim's keymap layer maps
+        -- <Esc> buffer-locally and deletes it afterwards, which would take a
+        -- buffer-local mapping of ours down with it
+        vim.keymap.set('n', '<Esc>', function()
+            local win = vim.b.lsp_floating_preview
+            if win and vim.api.nvim_win_is_valid(win) then
+                vim.api.nvim_win_close(win, true)
+            end
+        end, { desc = "Dismiss LSP float" })
+
         -- Use LspAttach autocommand to only map the following keys
         -- after the language server attaches to the current buffer
         vim.api.nvim_create_autocmd('LspAttach', {
@@ -58,13 +69,6 @@ return {
             vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, opts)
-            -- <Esc> dismisses the hover / signature float without moving the cursor
-            vim.keymap.set('n', '<Esc>', function()
-                local win = vim.b[ev.buf].lsp_floating_preview
-                if win and vim.api.nvim_win_is_valid(win) then
-                    vim.api.nvim_win_close(win, true)
-                end
-            end, opts)
             -- Refactor (VSCode-style)
             vim.keymap.set('n', 'cd', vim.lsp.buf.rename, opts)
             vim.keymap.set({ 'n', 'v' }, 'cr', vim.lsp.buf.code_action, opts)
