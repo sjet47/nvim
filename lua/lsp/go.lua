@@ -21,6 +21,8 @@ return {
                 -- heybox-go packages, pinning gopls at ~1.4 cores forever
                 staticcheck = false,
                 semanticTokens = true,
+                -- Complete calls with placeholders for their arguments
+                usePlaceholders = true,
                 hints = {
                     assignVariableTypes = true,
                     compositeLiteralFields = true,

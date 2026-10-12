@@ -64,6 +64,8 @@ return {
 
 		require("conform").setup({
 			formatters = {
+				-- Also simplify code (e.g. redundant composite literal types)
+				gofmt = { prepend_args = { "-s" } },
 				zeus_fmt = {
 					command = function(_, ctx)
 						return heybox_formatter(ctx.buf) or "goimports"
