@@ -95,10 +95,10 @@ return {
 				if vim.bo[bufnr].filetype == "go" and not heybox_formatter(bufnr) then
 					go_organize_imports(bufnr)
 				end
-				-- protols formats with clang-format and bashls with shfmt, which
-				-- would restyle whole files nobody formatted before; keep that
-				-- manual (<leader>f)
-				local manual = { proto = true, sh = true, bash = true }
+				-- protols formats with clang-format, bashls with shfmt and yamlls
+				-- with prettier, which would restyle whole files nobody formatted
+				-- before; keep that manual (<leader>f)
+				local manual = { proto = true, sh = true, bash = true, yaml = true }
 				if manual[vim.bo[bufnr].filetype] then
 					return nil
 				end
