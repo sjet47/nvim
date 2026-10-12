@@ -26,4 +26,4 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(require("config"))
 
 -- Set Appearance
-vim.cmd("colorscheme onedark_dark")
+vim.cmd("colorscheme onedark")
