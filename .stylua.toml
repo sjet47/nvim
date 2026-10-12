@@ -1,0 +1,6 @@
+# Chosen to match how most of this config is already written: 4 spaces,
+# long one-line key specs, `function() ... end` one-liners kept on one line
+indent_type = "Spaces"
+indent_width = 4
+column_width = 160
+collapse_simple_statement = "FunctionOnly"

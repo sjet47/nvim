@@ -15,6 +15,18 @@ return {
                     },
                 }
             })
+
+            -- Formatters used by conform (plugins/conform.lua) that are not
+            -- LSP servers, which mason-lspconfig below takes care of
+            local registry = require("mason-registry")
+            registry.refresh(function()
+                for _, name in ipairs({ "stylua" }) do
+                    local ok, pkg = pcall(registry.get_package, name)
+                    if ok and not pkg:is_installed() then
+                        pkg:install()
+                    end
+                end
+            end)
         end
     },
 

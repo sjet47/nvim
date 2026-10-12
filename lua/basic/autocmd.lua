@@ -3,9 +3,7 @@ local group = vim.api.nvim_create_augroup("UserBasic", {})
 -- Briefly highlight the yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = group,
-    callback = function()
-        vim.hl.on_yank()
-    end,
+    callback = function() vim.hl.on_yank() end,
 })
 
 -- Absolute line numbers while inserting, relative ones otherwise
@@ -69,7 +67,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- Terminal output is not prose
 vim.api.nvim_create_autocmd("TermOpen", {
     group = group,
-    callback = function()
-        vim.opt_local.spell = false
-    end,
+    callback = function() vim.opt_local.spell = false end,
 })
