@@ -65,3 +65,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.fn.winrestview(view)
     end,
 })
+
+-- Terminal output is not prose
+vim.api.nvim_create_autocmd("TermOpen", {
+    group = group,
+    callback = function()
+        vim.opt_local.spell = false
+    end,
+})
