@@ -71,6 +71,25 @@ return {
 
         require("conform").setup({
             formatters = {
+                -- conform passes the offset of the last selected byte as the
+                -- range end, but stylua's end is exclusive and it skips any
+                -- statement not fully inside the range: the last statement of
+                -- a visual selection was never formatted
+                stylua = {
+                    range_args = function(_, ctx)
+                        local first, last = require("conform.util").get_offsets_from_range(ctx.buf, ctx.range)
+                        return {
+                            "--search-parent-directories",
+                            "--stdin-filepath",
+                            "$FILENAME",
+                            "--range-start",
+                            tostring(first),
+                            "--range-end",
+                            tostring(last + 1),
+                            "-",
+                        }
+                    end,
+                },
                 -- Also simplify code (e.g. redundant composite literal types)
                 gofmt = { prepend_args = { "-s" } },
                 zeus_fmt = {
