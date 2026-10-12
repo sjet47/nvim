@@ -1,7 +1,19 @@
 -- Languages to install parsers for and enable treesitter features on
 local langs = {
-    "c", "cpp", "go", "rust", "python", "lua", "bash", "json", "proto",
-    "yaml", "toml", "dockerfile", "gomod", "diff",
+    "c",
+    "cpp",
+    "go",
+    "rust",
+    "python",
+    "lua",
+    "bash",
+    "json",
+    "proto",
+    "yaml",
+    "toml",
+    "dockerfile",
+    "gomod",
+    "diff",
 }
 
 return {
@@ -52,34 +64,36 @@ return {
 
             -- Select text objects
             local selects = {
-                ["af"] = "@function.outer",    ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",       ["ic"] = "@class.inner",
-                ["ai"] = "@conditional.outer", ["ii"] = "@conditional.inner",
-                ["al"] = "@loop.outer",        ["il"] = "@loop.inner",
-                ["ab"] = "@block.outer",       ["ib"] = "@block.inner",
-                ["aa"] = "@parameter.outer",   ["ia"] = "@parameter.inner",
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                ["ai"] = "@conditional.outer",
+                ["ii"] = "@conditional.inner",
+                ["al"] = "@loop.outer",
+                ["il"] = "@loop.inner",
+                ["ab"] = "@block.outer",
+                ["ib"] = "@block.inner",
+                ["aa"] = "@parameter.outer",
+                ["ia"] = "@parameter.inner",
             }
             for key, obj in pairs(selects) do
-                vim.keymap.set({ "x", "o" }, key, function()
-                    select.select_textobject(obj, "textobjects")
-                end)
+                vim.keymap.set({ "x", "o" }, key, function() select.select_textobject(obj, "textobjects") end)
             end
 
             -- Move between text objects
             local moves = {
-                { "]m", "goto_next_start",     "@function.outer" },
-                { "]]", "goto_next_start",     "@class.outer" },
-                { "]M", "goto_next_end",       "@function.outer" },
-                { "][", "goto_next_end",       "@class.outer" },
+                { "]m", "goto_next_start", "@function.outer" },
+                { "]]", "goto_next_start", "@class.outer" },
+                { "]M", "goto_next_end", "@function.outer" },
+                { "][", "goto_next_end", "@class.outer" },
                 { "[m", "goto_previous_start", "@function.outer" },
                 { "[[", "goto_previous_start", "@class.outer" },
-                { "[M", "goto_previous_end",   "@function.outer" },
-                { "[]", "goto_previous_end",   "@class.outer" },
+                { "[M", "goto_previous_end", "@function.outer" },
+                { "[]", "goto_previous_end", "@class.outer" },
             }
             for _, m in ipairs(moves) do
-                vim.keymap.set({ "n", "x", "o" }, m[1], function()
-                    move[m[2]](m[3], "textobjects")
-                end)
+                vim.keymap.set({ "n", "x", "o" }, m[1], function() move[m[2]](m[3], "textobjects") end)
             end
         end,
     },

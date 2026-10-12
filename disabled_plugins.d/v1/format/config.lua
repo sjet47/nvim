@@ -60,9 +60,12 @@ for name, lang in pairs(cfg.singular) do
     if lang.enable then
         if fmters[lang.formatter] then
             if lang.formatter == "prettier" then
-                table.insert(sources, formatting.prettier.with({
-                    filetypes = { name },
-                }))
+                table.insert(
+                    sources,
+                    formatting.prettier.with({
+                        filetypes = { name },
+                    })
+                )
             else
                 table.insert(sources, fmters[lang.formatter])
             end

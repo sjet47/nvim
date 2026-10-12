@@ -3,5 +3,5 @@ return {
         -- Load plugins
         require("v1.plugins")
         require("v1.lsp")
-    end
+    end,
 }

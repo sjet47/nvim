@@ -63,4 +63,3 @@ vim.o.laststatus = 2
 
 -- Default border of floating windows (LSP hover, signature help, ...)
 vim.o.winborder = "rounded"
-

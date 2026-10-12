@@ -11,57 +11,57 @@ local lsp = require("v1.config").lsp.singular
 
 local adapters = {}
 if lsp.golang.enable then
-  table.insert(
-    adapters,
-    require("neotest-go")({
-      experimental = {
-        test_table = true,
-      },
-      args = { "-count=1", "-timeout=60s" },
-    })
-  )
+    table.insert(
+        adapters,
+        require("neotest-go")({
+            experimental = {
+                test_table = true,
+            },
+            args = { "-count=1", "-timeout=60s" },
+        })
+    )
 end
 
 -- get neotest namespace (api call creates or returns namespace)
 local neotest_ns = vim.api.nvim_create_namespace("neotest")
 vim.diagnostic.config({
-  virtual_text = {
-    format = function(diagnostic)
-      local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-      return message
-    end,
-  },
+    virtual_text = {
+        format = function(diagnostic)
+            local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+            return message
+        end,
+    },
 }, neotest_ns)
 
 require("neotest").setup({
-  adapters = adapters,
+    adapters = adapters,
 
-  summary = {
-    animated = true,
-    enabled = true,
-    expand_errors = true,
-    follow = true,
-    mappings = {
-      expand = { "o", "<2-LeftMouse>" },
-      jumpto = "<CR>",
-      output = "O",
-      short = "s",
+    summary = {
+        animated = true,
+        enabled = true,
+        expand_errors = true,
+        follow = true,
+        mappings = {
+            expand = { "o", "<2-LeftMouse>" },
+            jumpto = "<CR>",
+            output = "O",
+            short = "s",
+        },
     },
-  },
 
-  icons = {
-    passed = "",
-    failed = "",
-    running = "",
-    running_animated = { "▫", "▪" },
-    skipped = "-",
-    unknown = "",
-  },
-  diagnostic = {
-    enabled = true,
-  },
-  status = {
-    signs = false,
-    virtual_text = true,
-  },
+    icons = {
+        passed = "",
+        failed = "",
+        running = "",
+        running_animated = { "▫", "▪" },
+        skipped = "-",
+        unknown = "",
+    },
+    diagnostic = {
+        enabled = true,
+    },
+    status = {
+        signs = false,
+        virtual_text = true,
+    },
 })

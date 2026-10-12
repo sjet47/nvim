@@ -3,7 +3,7 @@ local notify = require("notify")
 vim.notify = notify
 
 notify.setup({
-  stages = cfg.stages,
-  timeout = cfg.timeout,
-  render = cfg.render,
+    stages = cfg.stages,
+    timeout = cfg.timeout,
+    render = cfg.render,
 })

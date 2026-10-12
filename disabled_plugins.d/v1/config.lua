@@ -21,7 +21,6 @@ local C = {
     plugin = {
         enable_appearance = true,
 
-
         packer = {
             max_jobs = nil,
             -- Relative to nvim path
@@ -193,7 +192,6 @@ local C = {
                 toggle = "<leader>z",
             },
         },
-
     },
 
     ----------------------------------------------------------------------
@@ -224,7 +222,6 @@ local C = {
             goto_prev = "gk",
             list = "gl",
         },
-
 
         frontend = {
             enable = false,
@@ -320,8 +317,6 @@ local C = {
     fix_windows_clipboard = false,
 }
 
-function C.apply(user_config)
-
-end
+function C.apply(user_config) end
 
 return C

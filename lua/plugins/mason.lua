@@ -13,7 +13,7 @@ return {
                         package_pending = "➜",
                         package_uninstalled = "✗",
                     },
-                }
+                },
             })
 
             -- Formatters used by conform (plugins/conform.lua) that are not
@@ -27,7 +27,7 @@ return {
                     end
                 end
             end)
-        end
+        end,
     },
 
     {
@@ -53,6 +53,6 @@ return {
                 -- that happens to be installed.
                 automatic_enable = false,
             })
-        end
+        end,
     },
 }

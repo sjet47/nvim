@@ -76,6 +76,5 @@ vim.o.inccommand = "split"
 -- jumplist drops the entries after it instead of reordering them
 vim.o.jumpoptions = "stack"
 
-
 -- Disable vi-compatible to make vim behave in a more useful way
 vim.o.compatible = false

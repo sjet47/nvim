@@ -1,5 +1,5 @@
 local cfg = require("v1.config").plugin.packer
-local packer_path = vim.fn.stdpath('data') .. cfg.path
+local packer_path = vim.fn.stdpath("data") .. cfg.path
 
 -- Make sure packer.nvim is installed
 local function install_packer()
@@ -7,7 +7,10 @@ local function install_packer()
         vim.notify("packer.nvim not found")
         vim.notify("installing packer.nvim")
         vim.fn.system({
-            "git", "clone", "--depth", "1",
+            "git",
+            "clone",
+            "--depth",
+            "1",
             cfg.mirror .. cfg.repo_uri,
             packer_path,
         })
@@ -30,9 +33,7 @@ packer.init({
         default_url_format = cfg.mirror .. "%s",
     },
     display = {
-        open_fn = function()
-            return require("packer.util").float({ border = "rounded" })
-        end,
+        open_fn = function() return require("packer.util").float({ border = "rounded" }) end,
     },
 })
 
