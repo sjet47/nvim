@@ -58,6 +58,12 @@ return {
         sources = {
             default = { "lazydev", "lsp", "path", "snippets", "buffer" },
             providers = {
+                -- The menu waits for every source before it opens, by default
+                -- for up to 2s: a language server answering its first request
+                -- (cold caches in a big project) held back snippets and buffer
+                -- words that long. Wait 200ms at most; late LSP items are
+                -- added to the open menu
+                lsp = { timeout_ms = 200 },
                 -- Neovim API / plugin completions in lua files (lazydev.nvim)
                 lazydev = {
                     name = "LazyDev",
