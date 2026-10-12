@@ -32,12 +32,18 @@ return {
                     -- Get to the state a bare `nvim` starts in before loading
                     -- the session: without the explorer snacks has already
                     -- opened for the directory (restoring into that layout
-                    -- loses splits) and without the directory in the arglist
-                    -- (it would be saved into the session)
+                    -- loses splits), and without the directory in the arglist
+                    -- or as a hidden buffer (it would end up in the session,
+                    -- or make an otherwise empty one worth saving)
                     for _, explorer in ipairs(Snacks.picker.get({ source = "explorer" })) do
                         explorer:close()
                     end
                     vim.cmd("%argdelete")
+                    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                        if vim.fn.isdirectory(vim.api.nvim_buf_get_name(buf)) == 1 then
+                            pcall(vim.api.nvim_buf_delete, buf, { force = true })
+                        end
+                    end
                 elseif argc ~= 0 then
                     return
                 end
