@@ -10,19 +10,39 @@ return {
         -- was, no terminals, no fold state
         vim.o.sessionoptions = "buffers,curdir,help,tabpages,winsize,skiprtp"
 
-        -- Sessions are restored, and from then on recorded, only when Nvim is
-        -- opened on a project: no file arguments, nothing piped in. Editing a
-        -- single file (`nvim foo.go`) neither restores the project's session
-        -- nor overwrites it on exit
+        -- "Opened on a project" means started with no arguments or with a
+        -- single directory, and nothing piped in. `nvim <dir>` then behaves
+        -- exactly like `cd <dir> && nvim`: the directory becomes the cwd, its
+        -- session is restored (and recorded from then on) and the explorer is
+        -- shown (see the UIEnter hook in plugins/snacks.lua).
+        -- Editing a single file (`nvim foo.go`) neither restores the project's
+        -- session nor overwrites it on exit
         vim.api.nvim_create_autocmd("StdinReadPre", {
             callback = function() vim.g.started_with_stdin = true end,
         })
         vim.api.nvim_create_autocmd("VimEnter", {
             nested = true,
             callback = function()
-                if vim.fn.argc(-1) == 0 and not vim.g.started_with_stdin then
-                    require("persistence").load()
+                if vim.g.started_with_stdin then
+                    return
                 end
+                local argc = vim.fn.argc(-1)
+                if argc == 1 and vim.fn.isdirectory(vim.fn.argv(0, -1)) == 1 then
+                    vim.cmd.cd(vim.fn.fnameescape(vim.fn.fnamemodify(vim.fn.argv(0, -1), ":p")))
+                    -- Get to the state a bare `nvim` starts in before loading
+                    -- the session: without the explorer snacks has already
+                    -- opened for the directory (restoring into that layout
+                    -- loses splits) and without the directory in the arglist
+                    -- (it would be saved into the session)
+                    for _, explorer in ipairs(Snacks.picker.get({ source = "explorer" })) do
+                        explorer:close()
+                    end
+                    vim.cmd("%argdelete")
+                elseif argc ~= 0 then
+                    return
+                end
+                vim.g.opened_on_project = true
+                require("persistence").load()
             end,
         })
     end,

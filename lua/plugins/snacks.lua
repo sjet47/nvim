@@ -23,6 +23,13 @@ return {
             callback = function()
                 vim.schedule(function()
                     local explorer = Snacks.picker.get({ source = "explorer" })[1]
+                    -- Opened on a project (see plugins/persistence.lua): always
+                    -- show the explorer, also for a bare `nvim` and after a
+                    -- restored session closed the one `nvim <dir>` had opened
+                    if not explorer and vim.g.opened_on_project then
+                        Snacks.explorer({ enter = false })
+                        return
+                    end
                     if explorer and vim.api.nvim_win_is_valid(explorer.main) then
                         vim.api.nvim_set_current_win(explorer.main)
                     end
