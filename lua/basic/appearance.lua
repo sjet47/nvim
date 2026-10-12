@@ -34,8 +34,8 @@ vim.o.whichwrap = "<,>,[,]"
 vim.o.textwidth = 0
 
 -- Display invisible characters
-vim.o.list = false
-vim.o.listchars = "space:·,tab:··"
+vim.o.list = true
+vim.o.listchars = "space:·,tab:→ ,nbsp:␣"
 
 -- Display current edit mode(i.e. INSERT), (disable when using lualine plugin)
 vim.o.showmode = false
@@ -60,4 +60,7 @@ vim.o.ruler = true
 
 -- Always display status line
 vim.o.laststatus = 2
+
+-- Default border of floating windows (LSP hover, signature help, ...)
+vim.o.winborder = "rounded"
 

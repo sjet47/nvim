@@ -50,6 +50,16 @@ vim.o.swapfile = false
 -- Auto reload file when edited outside
 vim.o.autoread = true
 
+-- Ask what to do about unsaved changes instead of failing (e.g. :q, :e)
+vim.o.confirm = true
+
+-- Preview the effect of :s in a split while typing it
+vim.o.inccommand = "split"
+
+-- <C-o>/<C-i> behave like browser history: jumping from the middle of the
+-- jumplist drops the entries after it instead of reordering them
+vim.o.jumpoptions = "stack"
+
 
 -- Disable vi-compatible to make vim behave in a more useful way
 vim.o.compatible = false
