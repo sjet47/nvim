@@ -79,20 +79,7 @@ return {
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             end, opts)
             -- Formatting is handled by conform.nvim (<leader>f)
-
-            -- Highlight other references of the symbol under the cursor
-            -- (replaces the dropped nvim-treesitter-refactor module)
-            local client = vim.lsp.get_client_by_id(ev.data.client_id)
-            if client and client:supports_method('textDocument/documentHighlight') then
-                local hl = vim.api.nvim_create_augroup('UserLspDocHighlight', { clear = false })
-                vim.api.nvim_clear_autocmds({ group = hl, buffer = ev.buf })
-                vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-                    group = hl, buffer = ev.buf, callback = vim.lsp.buf.document_highlight,
-                })
-                vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-                    group = hl, buffer = ev.buf, callback = vim.lsp.buf.clear_references,
-                })
-            end
+            -- Highlighting the word under the cursor is handled by mini.cursorword
         end,
         })
 
