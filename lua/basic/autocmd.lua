@@ -1,9 +1,14 @@
 local group = vim.api.nvim_create_augroup("UserBasic", {})
 
--- Briefly highlight the yanked text
+-- Briefly highlight the yanked text. The default group (IncSearch) shares its
+-- background with the visual selection in onedark, so use an amber wash (the
+-- theme's yellow at ~35% over the editor background) that keeps syntax colors
+local function set_yank_hl() vim.api.nvim_set_hl(0, "YankHighlight", { bg = "#6a604d" }) end
+set_yank_hl()
+vim.api.nvim_create_autocmd("ColorScheme", { group = group, callback = set_yank_hl })
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = group,
-    callback = function() vim.hl.on_yank() end,
+    callback = function() vim.hl.on_yank({ higroup = "YankHighlight" }) end,
 })
 
 -- Absolute line numbers while inserting, relative ones otherwise
