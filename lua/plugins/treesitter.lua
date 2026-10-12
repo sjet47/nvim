@@ -29,14 +29,24 @@ return {
             -- Install parsers (async; no-op if already present)
             require("nvim-treesitter").install(langs)
 
+            local enabled = {}
+            for _, lang in ipairs(langs) do
+                enabled[lang] = true
+            end
+
             -- The `main` branch does not auto-enable features; do it per filetype.
             vim.api.nvim_create_autocmd("FileType", {
                 group = vim.api.nvim_create_augroup("UserTreesitter", {}),
-                pattern = langs,
                 callback = function(ev)
+                    -- Go by the parser a filetype maps to rather than its name:
+                    -- `sh` files are parsed as bash
+                    local lang = vim.treesitter.language.get_lang(ev.match)
+                    if not enabled[lang] then
+                        return
+                    end
                     -- Highlighting (skip very large buffers)
                     if vim.api.nvim_buf_line_count(ev.buf) <= 10000 then
-                        pcall(vim.treesitter.start)
+                        pcall(vim.treesitter.start, ev.buf, lang)
                     end
                     -- Experimental treesitter-based indentation
                     vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
