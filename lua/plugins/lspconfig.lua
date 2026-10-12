@@ -94,7 +94,9 @@ return {
         })
 
         vim.diagnostic.config({
-            virtual_text = true,
+            -- Inline text for errors and warnings only (as with VSCode's Error
+            -- Lens); hints and infos still get signs and underlines
+            virtual_text = { severity = { min = vim.diagnostic.severity.WARN } },
             update_in_insert = false,
             underline = true,
             severity_sort = true,
