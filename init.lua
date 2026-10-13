@@ -33,9 +33,11 @@ end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- Set lazy.nvim path: $HOME/.config/nvim/lazy/lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+-- Bootstrap lazy.nvim into the directory it installs plugins to (`root` in
+-- lua/config/init.lua). Anywhere else it counts as a local plugin, which
+-- lazy.nvim never updates: ~/.local/share/nvim/lazy/plugins/lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/plugins/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
