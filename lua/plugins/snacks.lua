@@ -1,12 +1,4 @@
--- Focus the explorer sidebar, opening it first if needed
-local function explorer_focus()
-    local explorer = Snacks.picker.get({ source = "explorer" })[1]
-    if explorer then
-        explorer:focus()
-    else
-        Snacks.explorer()
-    end
-end
+local explorer = require("util.explorer")
 
 return {
     -- A collection of QoL plugins: picker, file explorer, notifier,
@@ -22,15 +14,15 @@ return {
             once = true,
             callback = function()
                 vim.schedule(function()
-                    local explorer = Snacks.picker.get({ source = "explorer" })[1]
+                    local picker = explorer.get()
                     -- A project's session was restored (see
                     -- plugins/persistence.lua): show the explorer beside it
-                    if not explorer and vim.g.project_session_restored then
+                    if not picker and vim.g.project_session_restored then
                         Snacks.explorer({ enter = false })
                         return
                     end
-                    if explorer and vim.api.nvim_win_is_valid(explorer.main) then
-                        vim.api.nvim_set_current_win(explorer.main)
+                    if picker and vim.api.nvim_win_is_valid(picker.main) then
+                        vim.api.nvim_set_current_win(picker.main)
                     end
                 end)
             end,
@@ -95,7 +87,7 @@ return {
     },
     keys = {
         -- Explorer
-        { "<leader>e", explorer_focus, desc = "Explorer: focus" },
+        { "<leader>e", explorer.focus, desc = "Explorer: focus" },
         -- Find (search args are passed after `--`, e.g. `foo -- -g *.lua`)
         -- buffers + recent first, then every file in cwd once you start typing
         { "<C-p>", function() Snacks.picker.smart({ filter = { cwd = true } }) end, desc = "Find files (recent first)" },

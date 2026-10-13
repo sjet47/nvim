@@ -1,29 +1,19 @@
 -- VSCode-like handling of editor windows and tabs. Loaded after the plugins
 -- (see init.lua): unlike the maps in basic/keybinding.lua, these need Snacks
 
--- Filetypes of the snacks explorer sidebar windows
-local EXPLORER_FILETYPES = {
-    snacks_picker_list = true,
-    snacks_picker_input = true,
-    snacks_layout_box = true,
-}
+local explorer = require("util.explorer")
 
 -- <C-h> toggle focus between the explorer and the previous editor window
 vim.keymap.set("n", "<C-h>", function()
-    if EXPLORER_FILETYPES[vim.bo.filetype] then
+    if explorer.filetypes[vim.bo.filetype] then
         vim.cmd("wincmd p")
     else
-        local explorer = Snacks.picker.get({ source = "explorer" })[1]
-        if explorer then
-            explorer:focus()
-        else
-            Snacks.explorer()
-        end
+        explorer.focus()
     end
 end, { desc = "Toggle focus explorer" })
 
 -- Editor windows are non-floating windows that aren't side panels like the explorer
-local SIDE_PANEL_FILETYPES = EXPLORER_FILETYPES
+local SIDE_PANEL_FILETYPES = explorer.filetypes
 
 local function is_editor_win(win)
     if vim.api.nvim_win_get_config(win).relative ~= "" then
