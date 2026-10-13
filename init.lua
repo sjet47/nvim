@@ -49,5 +49,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Load plugins (specs are auto-imported from lua/plugins/ via config.spec)
 require("lazy").setup(require("config"))
 
+require("config.windows")
+
 -- Set Appearance
 vim.cmd("colorscheme onedark")
