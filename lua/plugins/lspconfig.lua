@@ -79,7 +79,10 @@ return {
                 vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, opts)
                 -- Refactor (VSCode-style)
                 vim.keymap.set("n", "cd", vim.lsp.buf.rename, opts)
-                vim.keymap.set({ "n", "v" }, "cr", vim.lsp.buf.code_action, opts)
+                vim.keymap.set("n", "cr", vim.lsp.buf.code_action, opts)
+                -- Not `cr` in visual mode: there `c` acts right away, and a map
+                -- starting with it makes `c` wait 'timeoutlen' for an `r`
+                vim.keymap.set("x", "<C-.>", vim.lsp.buf.code_action, opts)
                 -- Workspace
                 vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
                 vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
