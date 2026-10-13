@@ -182,10 +182,6 @@ end
 vim.keymap.set({ "n", "x" }, "<leader>yp", function() copy_relative_path(true) end, { desc = "Copy relative path:line" })
 vim.keymap.set("n", "<leader>yP", function() copy_relative_path(false) end, { desc = "Copy relative path" })
 
--- Back quote
-vim.keymap.set("n", "``", "ciw``<Esc>hp")
-vim.keymap.set("v", "``", "s``<Esc>hp")
-
 -- Use jj as Esc
 -- vim.keymap.set("i", "jj", "<Esc>")
 
