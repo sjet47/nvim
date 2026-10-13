@@ -16,7 +16,9 @@ return {
         attach_to_untracked = true,
         current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
         current_line_blame_opts = {
-            delay = 500,
+            -- Right away instead of once the cursor has rested for a second.
+            -- The blame of a file is computed once and then looked up
+            delay = 0,
             -- After the diagnostic of the line, not before it. The default
             -- (100) is below the 4096 of an extmark that names no priority,
             -- as the diagnostic text does, so the blame came first and pushed
