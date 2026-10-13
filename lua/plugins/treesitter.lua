@@ -1,4 +1,6 @@
--- Languages to install parsers for and enable treesitter features on
+-- Parsers to install. Treesitter is enabled for every filetype that has a
+-- parser (see the FileType autocmd below), so one added by hand with
+-- `:TSInstall` works without being listed; the list is what a new machine gets
 local langs = {
     "c",
     "cpp",
@@ -14,7 +16,25 @@ local langs = {
     "dockerfile",
     "gomod",
     "diff",
+    "markdown",
+    "markdown_inline",
+    "hyprlang",
+    "qmljs",
+    "css",
+    "desktop",
+    "zsh",
+    "ini",
+    "gitcommit",
+    "git_rebase",
+    "gosum",
+    "gowork",
 }
+
+-- Whether `lang` comes with a query file of that name (highlights, indents ...)
+local function has_query(lang, name)
+    local ok, query = pcall(vim.treesitter.query.get, lang, name)
+    return ok and query ~= nil
+end
 
 return {
     {
@@ -29,11 +49,6 @@ return {
             -- Install parsers (async; no-op if already present)
             require("nvim-treesitter").install(langs)
 
-            local enabled = {}
-            for _, lang in ipairs(langs) do
-                enabled[lang] = true
-            end
-
             -- The `main` branch does not auto-enable features; do it per filetype.
             vim.api.nvim_create_autocmd("FileType", {
                 group = vim.api.nvim_create_augroup("UserTreesitter", {}),
@@ -41,15 +56,21 @@ return {
                     -- Go by the parser a filetype maps to rather than its name:
                     -- `sh` files are parsed as bash
                     local lang = vim.treesitter.language.get_lang(ev.match)
-                    if not enabled[lang] then
+                    -- Nothing to do without a parser for it
+                    if not lang or not vim.treesitter.language.add(lang) then
                         return
                     end
-                    -- Highlighting (skip very large buffers)
-                    if vim.api.nvim_buf_line_count(ev.buf) <= 10000 then
+                    -- Highlighting (skip very large buffers). Only with a
+                    -- highlights query: starting treesitter turns the regex
+                    -- syntax off, which would leave the buffer without colors
+                    if vim.api.nvim_buf_line_count(ev.buf) <= 10000 and has_query(lang, "highlights") then
                         pcall(vim.treesitter.start, ev.buf, lang)
                     end
-                    -- Experimental treesitter-based indentation
-                    vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    -- Experimental treesitter-based indentation, for the
+                    -- languages that have indent queries
+                    if has_query(lang, "indents") then
+                        vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end
                 end,
             })
         end,
