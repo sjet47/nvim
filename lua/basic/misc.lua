@@ -1,5 +1,4 @@
--- Use UTF-8 Encoding
-vim.g.encoding = "UTF-8"
+-- Write new files as UTF-8
 vim.o.fileencoding = "utf-8"
 
 -- The length of time Vim waits after you stop typing before it triggers the plugin
