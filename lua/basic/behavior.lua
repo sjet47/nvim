@@ -59,6 +59,10 @@ vim.o.confirm = true
 -- Preview the effect of :s in a split while typing it
 vim.o.inccommand = "split"
 
+-- Keep the text where it is on screen when a horizontal split opens or
+-- closes; the :s preview above and the quickfix window otherwise scroll it
+vim.o.splitkeep = "screen"
+
 -- <C-o>/<C-i> behave like browser history: jumping from the middle of the
 -- jumplist drops the entries after it instead of reordering them
 vim.o.jumpoptions = "stack"
