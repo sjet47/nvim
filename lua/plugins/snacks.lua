@@ -1,5 +1,40 @@
 local explorer = require("util.explorer")
 
+-- The forge behind each git host, for Snacks.gitbrowse. The address of a repo
+-- follows from its remote, but how a file, a branch or a commit is addressed
+-- below it differs per forge, and a self-hosted domain doesn't say which one
+-- it runs. github.com, gitlab.com, bitbucket.org and git.sr.ht need no entry:
+-- snacks knows them already
+local forge_of_host = {
+    ["git.maxjia.com"] = "gitlab",
+}
+
+local forge_urls = {
+    gitlab = {
+        branch = "/-/tree/{branch}",
+        file = "/-/blob/{branch}/{file}#L{line_start}-{line_end}",
+        permalink = "/-/blob/{commit}/{file}#L{line_start}-{line_end}",
+        commit = "/-/commit/{commit}",
+    },
+}
+
+local gitbrowse_url_patterns = {}
+for host, forge in pairs(forge_of_host) do
+    gitbrowse_url_patterns[vim.pesc(host)] = forge_urls[forge]
+end
+
+-- Snacks.gitbrowse for the current line or the selected lines, pinned to the
+-- last commit of the file: the link keeps pointing at these lines, and it
+-- works on a branch that isn't pushed yet as long as that commit is. (The
+-- default takes a hex-looking word under the cursor, a timestamp say, for a
+-- commit hash and gives up when git doesn't know it.) Outside of a file there
+-- is only the branch to show
+---@param opts? snacks.gitbrowse.Config
+local function gitbrowse(opts)
+    local in_file = vim.bo.buftype == "" and vim.api.nvim_buf_get_name(0) ~= ""
+    Snacks.gitbrowse(vim.tbl_extend("force", { what = in_file and "permalink" or "branch" }, opts or {}))
+end
+
 return {
     -- A collection of QoL plugins: picker, file explorer, notifier,
     -- indent guides, lazygit integration, ...
@@ -102,6 +137,7 @@ return {
         input = { enabled = true },
         indent = { enabled = true },
         lazygit = { enabled = true },
+        gitbrowse = { url_patterns = gitbrowse_url_patterns },
         -- Skip treesitter, LSP ... for files too big to handle smoothly
         bigfile = { enabled = true },
         -- Smooth scrolling, much shorter than the default 200ms (and 50ms
@@ -139,5 +175,22 @@ return {
         { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
         { "<leader>gl", function() Snacks.lazygit.log_file() end, desc = "Lazygit: current file log" },
         { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git status" },
+        -- The current line or the selected lines on the forge of the remote
+        -- (see forge_of_host above): in the browser, or as a link to paste
+        { "<leader>gB", function() gitbrowse() end, mode = { "n", "x" }, desc = "Open in browser" },
+        {
+            "<leader>yg",
+            function()
+                gitbrowse({
+                    notify = false,
+                    open = function(url)
+                        vim.fn.setreg("+", url)
+                        vim.notify("Copied: " .. url)
+                    end,
+                })
+            end,
+            mode = { "n", "x" },
+            desc = "Copy git link",
+        },
     },
 }
