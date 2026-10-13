@@ -3,8 +3,8 @@ vim.o.number = true
 -- Display relative line number for short jump
 vim.o.relativenumber = true
 
--- Left sign column(not known what it does currently)
--- It place a placeholder at the left most column
+-- Always keep room for one sign (diagnostics, git changes ...), so the text
+-- doesn't shift when the first sign appears
 vim.o.signcolumn = "yes:1"
 
 -- Highlight the line the cursor is on

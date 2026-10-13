@@ -23,7 +23,7 @@ vim.keymap.set("n", "<CR>", "<CR>")
 -- Save
 vim.keymap.set("n", "<C-s>", "<cmd>:w<cr>")
 
--- Quickfix (used by `gr` references list, etc.)
+-- Quickfix
 vim.keymap.set("n", "<leader>co", "<cmd>copen<cr>", { desc = "Quickfix: open" })
 vim.keymap.set("n", "<leader>cc", "<cmd>cclose<cr>", { desc = "Quickfix: close" })
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz", { desc = "Quickfix: next item" })
