@@ -60,6 +60,9 @@ return {
         end
 
         require("lualine").setup({
+            -- One statusline across the whole screen ('laststatus' 3, which
+            -- lualine sets from this) instead of one under every window
+            options = { globalstatus = true },
             sections = {
                 lualine_x = { lsp_progress_status, "encoding", "fileformat", "filetype" },
             },
