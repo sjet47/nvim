@@ -4,7 +4,7 @@ return {
         -- Easily install and manage LSP servers, DAP servers, linters, and formatters
         ---@see https://github.com/mason-org/mason.nvim
         "mason-org/mason.nvim",
-        config = function(LazyPlugin, opts)
+        config = function()
             require("mason").setup({
                 ui = {
                     border = "rounded",
@@ -37,7 +37,7 @@ return {
         dependencies = {
             "mason-org/mason.nvim",
         },
-        config = function(LazyPlugin, opts)
+        config = function()
             require("mason-lspconfig").setup({
                 -- Servers to install if they're not already installed
                 ---@type string[]
