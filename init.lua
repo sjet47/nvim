@@ -13,3 +13,5 @@ require("config.dirarg")
 require("config.lazy")
 -- VSCode-like editor windows and tabs, built on the plugins
 require("config.windows")
+-- Nvim's new message and command-line UI (experimental)
+require("config.ui2")
