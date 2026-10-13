@@ -11,11 +11,11 @@ return {
         vim.o.sessionoptions = "buffers,curdir,help,tabpages,winsize,skiprtp"
 
         -- "Opened on a project" means started without arguments and with
-        -- nothing piped in; init.lua turns `nvim <dir>` into exactly that.
-        -- The project's session is then restored (and recorded from then on)
-        -- with the explorer beside it; without one, Nvim shows its intro
-        -- screen. Editing a single file (`nvim foo.go`) neither restores the
-        -- project's session nor overwrites it on exit
+        -- nothing piped in; config/dirarg.lua turns `nvim <dir>` into exactly
+        -- that. The project's session is then restored (and recorded from
+        -- then on) with the explorer beside it; without one, Nvim shows its
+        -- intro screen. Editing a single file (`nvim foo.go`) neither restores
+        -- the project's session nor overwrites it on exit
         vim.api.nvim_create_autocmd("StdinReadPre", {
             callback = function() vim.g.started_with_stdin = true end,
         })
