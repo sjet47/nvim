@@ -27,6 +27,15 @@ require("lazy").setup({
     -- No plugin here needs a luarocks package. Left enabled, lazy.nvim wants
     -- luarocks (or its own hererocks build) and reports it as missing
     rocks = { enabled = false },
+
+    ui = {
+        -- Does not follow 'winborder' by itself
+        border = "rounded",
+        -- No dimmed backdrop (100 = fully transparent = off): it is a second
+        -- float that does follow 'winborder', which draws a frame around the
+        -- whole screen
+        backdrop = 100,
+    },
 })
 
 -- Set Appearance. Only now, after the plugins, and not from the colorscheme's
