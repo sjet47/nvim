@@ -27,6 +27,35 @@ return {
                 end)
             end,
         })
+
+        -- Toggles under <leader>u. which-key shows the state each one is in
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "VeryLazy",
+            callback = function()
+                Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+                Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+                Snacks.toggle.diagnostics():map("<leader>ud")
+                -- Everywhere, like <C-M-t> (plugins/lspconfig.lua); the
+                -- built-in inlay hints toggle is per buffer
+                Snacks.toggle({
+                    name = "Inlay Hints",
+                    get = function() return vim.lsp.inlay_hint.is_enabled() end,
+                    set = function(state) vim.lsp.inlay_hint.enable(state) end,
+                }):map("<leader>uh")
+                Snacks.toggle({
+                    name = "Git Blame Line",
+                    get = function() return require("gitsigns.config").config.current_line_blame end,
+                    set = function(state) require("gitsigns").toggle_current_line_blame(state) end,
+                }):map("<leader>ub")
+                -- Honored by format_on_save in plugins/conform.lua and by the
+                -- trailing whitespace autocmd in basic/autocmd.lua
+                Snacks.toggle({
+                    name = "Format on Save",
+                    get = function() return not vim.g.disable_autoformat end,
+                    set = function(state) vim.g.disable_autoformat = not state end,
+                }):map("<leader>uf")
+            end,
+        })
     end,
     ---@type snacks.Config
     opts = {

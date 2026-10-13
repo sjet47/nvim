@@ -112,6 +112,10 @@ return {
             },
             -- Fall back to LSP formatting for filetypes without a formatter above
             format_on_save = function(bufnr)
+                -- Switched off with <leader>uf (plugins/snacks.lua)
+                if vim.g.disable_autoformat then
+                    return nil
+                end
                 -- goimports (zeus_fmt) fixes imports itself, and running gopls
                 -- first leaves groups it then refuses to reorder
                 if vim.bo[bufnr].filetype == "go" and not heybox_formatter(bufnr) then

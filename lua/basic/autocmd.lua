@@ -53,6 +53,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 vim.api.nvim_create_autocmd("BufWritePre", {
     group = group,
     callback = function(ev)
+        -- Saving leaves the text alone while format-on-save is switched off
+        -- (<leader>uf, see plugins/snacks.lua)
+        if vim.g.disable_autoformat then
+            return
+        end
         local bo = vim.bo[ev.buf]
         -- A trailing space is significant in a patch
         if bo.binary or not bo.modifiable or bo.filetype == "diff" then
