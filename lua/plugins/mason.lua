@@ -38,19 +38,14 @@ return {
             "mason-org/mason.nvim",
         },
         config = function(LazyPlugin, opts)
-            local lsp_servers = {}
-            for _, lsp in pairs(require("lsp")) do
-                table.insert(lsp_servers, lsp.name)
-            end
-
             require("mason-lspconfig").setup({
                 -- Servers to install if they're not already installed
                 ---@type string[]
-                ensure_installed = lsp_servers,
+                ensure_installed = require("util.lsp").servers,
 
                 -- Servers are enabled explicitly in plugins/lspconfig.lua from
-                -- the lua/lsp/ specs, so don't let mason enable every server
-                -- that happens to be installed.
+                -- the same list, so don't let mason enable every server that
+                -- happens to be installed.
                 automatic_enable = false,
             })
         end,

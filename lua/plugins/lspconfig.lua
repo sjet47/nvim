@@ -2,29 +2,19 @@ return {
     -- Bundled server configs (lsp/*.lua) consumed by the native vim.lsp API
     ---@see https://github.com/neovim/nvim-lspconfig
     "neovim/nvim-lspconfig",
-    -- mason-lspconfig must install servers before they are enabled
     dependencies = {
+        -- mason-lspconfig must install servers before they are enabled
         "mason-org/mason.nvim",
         "mason-org/mason-lspconfig.nvim",
+        -- Registers its completion capabilities for every server ("*") as it
+        -- loads, which has to happen before the first server starts
         "saghen/blink.cmp",
     },
     config = function()
-        local common = require("lsp.common")
-        local lsps = require("lsp")
-
-        -- Defaults applied to every server (blink.cmp capabilities)
-        vim.lsp.config("*", {
-            capabilities = common.capabilities,
-        })
-
-        -- Per-server overrides, then enable. Base configs (cmd, filetypes,
-        -- root markers) come from nvim-lspconfig's bundled lsp/*.lua files.
-        for _, lsp in pairs(lsps) do
-            if lsp.config then
-                vim.lsp.config(lsp.name, lsp.config)
-            end
-            vim.lsp.enable(lsp.name)
-        end
+        -- Base configs (cmd, filetypes, root markers) come from
+        -- nvim-lspconfig's lsp/*.lua files; Nvim merges our overrides in
+        -- after/lsp/<server>.lua on top of them (:h lsp-config-merge)
+        vim.lsp.enable(require("util.lsp").servers)
 
         -- Global diagnostic mappings.
         -- See `:help vim.diagnostic.*` for documentation.

@@ -13,7 +13,9 @@ return {
     ---@see https://github.com/saghen/blink.cmp
     "saghen/blink.cmp",
     version = "1.*", -- release tags ship the prebuilt fuzzy matcher
-    event = { "InsertEnter", "CmdlineEnter" },
+    -- Its LSP capabilities must be registered before any server starts (it is
+    -- a dependency of plugins/lspconfig.lua), so lazy-loading can never apply
+    lazy = false,
     dependencies = { "L3MON4D3/LuaSnip" },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config

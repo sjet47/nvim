@@ -2,6 +2,5 @@
 -- Schemas are picked from schemastore.org by file name (CI configs,
 -- compose files, k8s manifests ...). Formatting is manual only, see
 -- plugins/conform.lua
-return {
-    name = "yamlls",
-}
+---@type vim.lsp.Config
+return {}
