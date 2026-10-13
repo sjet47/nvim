@@ -49,9 +49,6 @@ return {
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("UserLspConfig", {}),
             callback = function(ev)
-                -- Enable completion triggered by <c-x><c-o>
-                vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-
                 -- Buffer local mappings.
                 -- See `:help vim.lsp.*` for documentation on any of the below functions
                 local opts = { buffer = ev.buf }
@@ -63,9 +60,8 @@ return {
                 -- Call hierarchy: c[a]lls [i]ncoming / [o]utgoing
                 vim.keymap.set("n", "gai", function() Snacks.picker.lsp_incoming_calls() end, opts)
                 vim.keymap.set("n", "gao", function() Snacks.picker.lsp_outgoing_calls() end, opts)
-                -- Hover / signature
+                -- Hover (also on K, an Nvim default) / signature
                 vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
-                vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                 vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, opts)
                 -- Refactor (VSCode-style)
                 vim.keymap.set("n", "cd", vim.lsp.buf.rename, opts)
@@ -73,10 +69,6 @@ return {
                 -- Not `cr` in visual mode: there `c` acts right away, and a map
                 -- starting with it makes `c` wait 'timeoutlen' for an `r`
                 vim.keymap.set("x", "<C-.>", vim.lsp.buf.code_action, opts)
-                -- Workspace
-                vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-                vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
-                vim.keymap.set("n", "<space>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
                 -- Formatting is handled by conform.nvim (<leader>ff)
                 -- Highlighting the word under the cursor is handled by mini.cursorword
             end,
