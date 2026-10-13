@@ -15,7 +15,14 @@ return {
         word_diff = true, -- Toggle with `:Gitsigns toggle_word_diff`
         attach_to_untracked = true,
         current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-        current_line_blame_opts = { delay = 500 },
+        current_line_blame_opts = {
+            delay = 500,
+            -- After the diagnostic of the line, not before it. The default
+            -- (100) is below the 4096 of an extmark that names no priority,
+            -- as the diagnostic text does, so the blame came first and pushed
+            -- the message out of a narrow window
+            virt_text_priority = 5000,
+        },
         current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
         -- The preview and blame popups get their (rounded) border from
         -- 'winborder', like every other float
