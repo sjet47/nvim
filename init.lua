@@ -30,9 +30,6 @@ if vim.fn.argc(-1) == 1 and vim.fn.isdirectory(vim.fn.argv(0, -1)) == 1 then
     })
 end
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 -- Bootstrap lazy.nvim into the directory it installs plugins to (`root` in
 -- lua/config/init.lua). Anywhere else it counts as a local plugin, which
 -- lazy.nvim never updates: ~/.local/share/nvim/lazy/plugins/lazy.nvim
