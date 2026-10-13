@@ -10,26 +10,4 @@ return {
     -- No plugin here needs a luarocks package. Left enabled, lazy.nvim wants
     -- luarocks (or its own hererocks build) and reports it as missing
     rocks = { enabled = false },
-
-    ui = {
-        icons = {
-            cmd = " ",
-            config = "",
-            event = "",
-            ft = " ",
-            init = " ",
-            import = " ",
-            keys = " ",
-            lazy = "󰒲 ",
-            loaded = "●",
-            not_loaded = "○",
-            plugin = " ",
-            runtime = " ",
-            require = "󰢱 ",
-            source = " ",
-            start = "",
-            task = "✔ ",
-            list = { "●", "➜", "★", "‒" },
-        },
-    },
 }

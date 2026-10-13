@@ -101,11 +101,13 @@ return {
                 on_jump = function(_, bufnr) vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false }) end,
             },
             signs = {
+                -- Nerd Font glyphs, written as escapes so that tools which
+                -- mangle private-use characters can't silently blank them
                 text = {
-                    [vim.diagnostic.severity.ERROR] = " ",
-                    [vim.diagnostic.severity.WARN] = " ",
-                    [vim.diagnostic.severity.HINT] = " ",
-                    [vim.diagnostic.severity.INFO] = " ",
+                    [vim.diagnostic.severity.ERROR] = "\u{f057} ",
+                    [vim.diagnostic.severity.WARN] = "\u{f071} ",
+                    [vim.diagnostic.severity.HINT] = "\u{f400} ",
+                    [vim.diagnostic.severity.INFO] = "\u{f06a} ",
                 },
             },
             float = {
