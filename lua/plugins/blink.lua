@@ -47,7 +47,9 @@ return {
             end,
             jump = function(direction)
                 local ls = require("luasnip")
-                return ls.jumpable(direction) and ls.jump(direction)
+                if ls.jumpable(direction) then
+                    ls.jump(direction)
+                end
             end,
         },
         completion = {
