@@ -95,36 +95,36 @@ return {
 
             -- Select text objects
             local selects = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-                ["ai"] = "@conditional.outer",
-                ["ii"] = "@conditional.inner",
-                ["al"] = "@loop.outer",
-                ["il"] = "@loop.inner",
-                ["ab"] = "@block.outer",
-                ["ib"] = "@block.inner",
-                ["aa"] = "@parameter.outer",
-                ["ia"] = "@parameter.inner",
+                { "af", "@function.outer", "a function" },
+                { "if", "@function.inner", "inner function" },
+                { "ac", "@class.outer", "a class" },
+                { "ic", "@class.inner", "inner class" },
+                { "ai", "@conditional.outer", "a conditional" },
+                { "ii", "@conditional.inner", "inner conditional" },
+                { "al", "@loop.outer", "a loop" },
+                { "il", "@loop.inner", "inner loop" },
+                { "ab", "@block.outer", "a block" },
+                { "ib", "@block.inner", "inner block" },
+                { "aa", "@parameter.outer", "a parameter" },
+                { "ia", "@parameter.inner", "inner parameter" },
             }
-            for key, obj in pairs(selects) do
-                vim.keymap.set({ "x", "o" }, key, function() select.select_textobject(obj, "textobjects") end)
+            for _, s in ipairs(selects) do
+                vim.keymap.set({ "x", "o" }, s[1], function() select.select_textobject(s[2], "textobjects") end, { desc = s[3] })
             end
 
             -- Move between text objects
             local moves = {
-                { "]m", "goto_next_start", "@function.outer" },
-                { "]]", "goto_next_start", "@class.outer" },
-                { "]M", "goto_next_end", "@function.outer" },
-                { "][", "goto_next_end", "@class.outer" },
-                { "[m", "goto_previous_start", "@function.outer" },
-                { "[[", "goto_previous_start", "@class.outer" },
-                { "[M", "goto_previous_end", "@function.outer" },
-                { "[]", "goto_previous_end", "@class.outer" },
+                { "]m", "goto_next_start", "@function.outer", "Next function start" },
+                { "]]", "goto_next_start", "@class.outer", "Next class start" },
+                { "]M", "goto_next_end", "@function.outer", "Next function end" },
+                { "][", "goto_next_end", "@class.outer", "Next class end" },
+                { "[m", "goto_previous_start", "@function.outer", "Prev function start" },
+                { "[[", "goto_previous_start", "@class.outer", "Prev class start" },
+                { "[M", "goto_previous_end", "@function.outer", "Prev function end" },
+                { "[]", "goto_previous_end", "@class.outer", "Prev class end" },
             }
             for _, m in ipairs(moves) do
-                vim.keymap.set({ "n", "x", "o" }, m[1], function() move[m[2]](m[3], "textobjects") end)
+                vim.keymap.set({ "n", "x", "o" }, m[1], function() move[m[2]](m[3], "textobjects") end, { desc = m[4] })
             end
         end,
     },

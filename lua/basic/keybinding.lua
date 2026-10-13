@@ -7,21 +7,21 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Select all
-vim.keymap.set("", "<C-a>", "gg0vG$")
+vim.keymap.set("", "<C-a>", "gg0vG$", { desc = "Select all" })
 
 -- Window navigation with <C-j/k>
-vim.keymap.set("n", "<C-j>", "<C-w>j")
-vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to the window below" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to the window above" })
 
 -- <C-l> jump to end of line (overrides default window-right nav)
 vim.keymap.set("n", "<C-l>", "$", { desc = "Jump to end of line" })
 
 -- Mapping <C-m> also catches <CR> (Nvim treats it as <C-m>'s simplified form)
 -- unless <CR> has its own mapping, so keep Enter as-is explicitly
-vim.keymap.set("n", "<CR>", "<CR>")
+vim.keymap.set("n", "<CR>", "<CR>", { desc = "Enter (not <C-m>)" })
 
 -- Save
-vim.keymap.set("n", "<C-s>", "<cmd>:w<cr>")
+vim.keymap.set("n", "<C-s>", "<cmd>:w<cr>", { desc = "Save" })
 
 -- Quickfix
 vim.keymap.set("n", "<leader>co", "<cmd>copen<cr>", { desc = "Quickfix: open" })

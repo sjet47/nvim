@@ -18,9 +18,9 @@ return {
 
         -- Global diagnostic mappings.
         -- See `:help vim.diagnostic.*` for documentation.
-        vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
+        vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, { desc = "Diagnostics of this line" })
         -- [d / ]d are Neovim defaults (vim.diagnostic.jump); see `jump` below
-        vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+        vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, { desc = "Diagnostics to the location list" })
 
         -- Toggle inlay hints globally. A bare Ctrl+Alt (as in VSCode's
         -- hold-to-peek) never reaches a terminal app, so it needs a letter.
@@ -51,24 +51,24 @@ return {
             callback = function(ev)
                 -- Buffer local mappings.
                 -- See `:help vim.lsp.*` for documentation on any of the below functions
-                local opts = { buffer = ev.buf }
+                local function map(mode, lhs, rhs, desc) vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, desc = desc }) end
                 -- Navigation (VSCode-style); prefer snacks pickers for multi-result lookups
-                vim.keymap.set("n", "gd", function() Snacks.picker.lsp_definitions() end, opts)
-                vim.keymap.set("n", "gD", function() Snacks.picker.lsp_type_definitions() end, opts)
-                vim.keymap.set("n", "gi", function() Snacks.picker.lsp_implementations() end, opts)
-                vim.keymap.set("n", "gr", function() Snacks.picker.lsp_references() end, opts)
+                map("n", "gd", function() Snacks.picker.lsp_definitions() end, "Go to definition")
+                map("n", "gD", function() Snacks.picker.lsp_type_definitions() end, "Go to type definition")
+                map("n", "gi", function() Snacks.picker.lsp_implementations() end, "Go to implementation")
+                map("n", "gr", function() Snacks.picker.lsp_references() end, "References")
                 -- Call hierarchy: c[a]lls [i]ncoming / [o]utgoing
-                vim.keymap.set("n", "gai", function() Snacks.picker.lsp_incoming_calls() end, opts)
-                vim.keymap.set("n", "gao", function() Snacks.picker.lsp_outgoing_calls() end, opts)
+                map("n", "gai", function() Snacks.picker.lsp_incoming_calls() end, "Incoming calls")
+                map("n", "gao", function() Snacks.picker.lsp_outgoing_calls() end, "Outgoing calls")
                 -- Hover (also on K, an Nvim default) / signature
-                vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
-                vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, opts)
+                map("n", "gh", vim.lsp.buf.hover, "Hover")
+                map("n", "gK", vim.lsp.buf.signature_help, "Signature help")
                 -- Refactor (VSCode-style)
-                vim.keymap.set("n", "cd", vim.lsp.buf.rename, opts)
-                vim.keymap.set("n", "cr", vim.lsp.buf.code_action, opts)
+                map("n", "cd", vim.lsp.buf.rename, "Rename symbol")
+                map("n", "cr", vim.lsp.buf.code_action, "Code action")
                 -- Not `cr` in visual mode: there `c` acts right away, and a map
                 -- starting with it makes `c` wait 'timeoutlen' for an `r`
-                vim.keymap.set("x", "<C-.>", vim.lsp.buf.code_action, opts)
+                map("x", "<C-.>", vim.lsp.buf.code_action, "Code action")
                 -- Formatting is handled by conform.nvim (<leader>ff)
                 -- Highlighting the word under the cursor is handled by mini.cursorword
             end,
