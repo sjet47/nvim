@@ -8,9 +8,9 @@ local M = {}
 -- (plugins/lspconfig.lua).
 ---@type string[]
 M.servers = {}
-for name, type in vim.fs.dir(vim.fn.stdpath("config") .. "/after/lsp") do
+for name, ftype in vim.fs.dir(vim.fn.stdpath("config") .. "/after/lsp") do
     local server = name:match("^(.+)%.lua$")
-    if server and type ~= "directory" then
+    if server and ftype ~= "directory" then
         table.insert(M.servers, server)
     end
 end
