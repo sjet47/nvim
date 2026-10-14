@@ -59,32 +59,13 @@ return {
             return (table.concat(result, " | "):gsub("%%", "%%%%"))
         end
 
-        -- Whether another listed buffer has the same file name as this one
-        local function name_is_ambiguous()
-            local name = vim.fn.expand("%:t")
-            if name == "" then
-                return false
-            end
-            local current = vim.api.nvim_get_current_buf()
-            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-                if buf ~= current and vim.bo[buf].buflisted and vim.fs.basename(vim.api.nvim_buf_get_name(buf)) == name then
-                    return true
-                end
-            end
-            return false
-        end
-
         require("lualine").setup({
             -- One statusline across the whole screen ('laststatus' 3, which
             -- lualine sets from this) instead of one under every window
             options = { globalstatus = true },
             sections = {
-                -- Just the file name, unless two open files share it: then
-                -- the path from the cwd tells them apart
-                lualine_c = {
-                    { "filename", path = 1, cond = name_is_ambiguous },
-                    { "filename", cond = function() return not name_is_ambiguous() end },
-                },
+                -- The path from the cwd, not just the file name
+                lualine_c = { { "filename", path = 1 } },
                 lualine_x = {
                     lsp_progress_status,
                     -- Only worth showing when they are not the usual ones
