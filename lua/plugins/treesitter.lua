@@ -28,6 +28,10 @@ local langs = {
     "git_rebase",
     "gosum",
     "gowork",
+    "ocaml",
+    "ocaml_interface",
+    "ocamllex",
+    "menhir",
 }
 
 -- Whether `lang` comes with a query file of that name (highlights, indents ...)
