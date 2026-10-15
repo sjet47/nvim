@@ -41,7 +41,7 @@ return {
             require("mason-lspconfig").setup({
                 -- Servers to install if they're not already installed
                 ---@type string[]
-                ensure_installed = require("util.lsp").servers,
+                ensure_installed = require("util.lsp").mason_servers,
 
                 -- Servers are enabled explicitly in plugins/lspconfig.lua from
                 -- the same list, so don't let mason enable every server that
